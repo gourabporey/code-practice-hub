@@ -1,0 +1,5 @@
+When linking a directory to a source directory, it is creating another file inside the target directory which is pointing to the source directory.
+mkdir foo baz
+mkdir foo/somedata
+ln -s foo baz
+ll 

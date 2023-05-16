@@ -1,0 +1,4 @@
+total 0
+drwxr-xr-x  3 gourabporey  staff   96 Jan 16 17:56 .
+drwxr-xr-x  5 gourabporey  staff  160 Jan 16 19:49 ..
+-rw-r--r--  1 gourabporey  staff    0 Jan 16 17:56 cpg.txt

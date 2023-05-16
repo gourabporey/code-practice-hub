@@ -1,0 +1,8 @@
+command: find
+  find path -name "regex"
+  find path -name "regex" -not -name "regex"
+  find path -empty 
+
+
+Inferences:
+find "-exec" command doesn't work for ALIASES

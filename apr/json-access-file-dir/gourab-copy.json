@@ -1,0 +1,11 @@
+{
+  "name": "gourab",
+  "age": 21,
+  "address": {
+    "state": "west-bengal",
+    "district": "south 24 parganas",
+    "pincode": 700140,
+    "city": "batanagar"
+  },
+  "occupation": "step-intern"
+}

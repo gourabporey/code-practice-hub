@@ -1,0 +1,84 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+int length_of_the_array_of_words = 0;
+
+// gives the first occurance of any character
+int index_of_first_matching_char (char character, char* sentence) {
+  int index = 0;
+  while (sentence[index] != '\0') {
+    if (sentence[index] == character) return index;
+    index++;
+  }
+  return index;
+}
+
+// gives the first occurance of any character other than the character specified
+// (' ', "    This is") ---> 4
+int index_of_first_not_matching_char(char character, char* sentence) {
+  int index = 0;
+  while (sentence[index] != '\0') {
+    if (sentence[index] != character) return index;
+    index++;
+  }
+  return index;
+}
+
+// slices the string from a start_index to another end_index
+// slice("apple", 1, 3) = "ppl" 
+char* slice(char* string, int start_index, int end_index) {
+  int length = end_index - start_index;
+  char* sliced_string = (char *)malloc(length * (sizeof(char)));
+  int index = 0;
+
+  for (int i = start_index; i <= end_index; i++) {
+    sliced_string[index] = string[i];
+    index++;
+  }
+
+  return sliced_string;
+}
+
+// gives an array of strings
+// split("  This is a sentence  ") ---> ["This", "is", "a", "sentence"]
+char** split(char sentence[]) {
+  int index = 0;
+  int no_of_words = 0;
+  int length = strlen(sentence);
+
+  // words is an array of strings that will contain the individual words
+  char** words = (char**)malloc(length * (sizeof(char)));
+  // we shouldn't modify the input so I made a modifiable copy
+  char* modifiable_sentence = (char *)malloc(length * (sizeof(char)));
+  strcpy(modifiable_sentence, sentence);
+
+  while (strlen(modifiable_sentence) > 0) {
+    // Gives me the first occurance of any non-space character
+    int index_of_first_char_of_word = index_of_first_not_matching_char (' ', modifiable_sentence);
+    // Then we slice the sentence from the non-space char to the end
+    modifiable_sentence = slice(modifiable_sentence, index_of_first_char_of_word, length - 1);
+    // Then we get the last character of the word
+    int index_of_last_char_of_word = index_of_first_matching_char (' ', modifiable_sentence) - 1;
+    // We get the word from slicing from current index to the last char of word
+    char* word = slice(modifiable_sentence, 0, index_of_last_char_of_word);
+    // After getting the word we slice from the end of word to the end of the sentence 
+    modifiable_sentence = slice(modifiable_sentence, index_of_last_char_of_word + 1, length - 1);
+    // Adding the word
+    words[index++] = word;
+    no_of_words++;
+  }
+
+  length_of_the_array_of_words = no_of_words - 1;
+  return words;
+}
+
+int main() {
+  char* sentence = "       This        is a sentence         ";
+  char** words = split(sentence);
+  puts(sentence);
+  for (int i = 0; i < length_of_the_array_of_words; i++) {
+    puts(words[i]);
+  }
+  return 0;
+}

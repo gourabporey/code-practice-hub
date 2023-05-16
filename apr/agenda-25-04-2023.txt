@@ -1,0 +1,13 @@
+String interpolation -
+  practice 
+  change the argument where adding string with any variables
+
+Default Arguments -
+  change where the default arguments are undefined 
+
+do-while -
+  make a simple greet program
+
+arguments - 
+  implement max function with arguments
+

@@ -1,0 +1,37 @@
+Command: find practice -empty -exec ls -l {} \;
+-rw-r--r--  1 gourabporey  staff  0 Feb 24 10:24 practice/testing/feb_23/actual.sh
+-rw-r--r--  1 gourabporey  staff  0 Jan 24 17:01 practice/tar_notes/state_restore/a
+-rw-r--r--  1 gourabporey  staff  0 Jan 24 17:01 practice/tar_notes/state_restore/b
+total 0
+-rw-r--r--  1 gourabporey  staff  0 Jan 24 17:01 practice/states/a
+-rw-r--r--  1 gourabporey  staff  0 Jan 24 17:01 practice/states/b
+total 0
+-rw-r--r--  1 gourabporey  staff  0 Jan 24 17:01 practice/restore/states/23022023_1430/a
+-rw-r--r--  1 gourabporey  staff  0 Jan 24 17:01 practice/restore/states/23022023_1430/b
+-rw-r--r--  1 gourabporey  staff  0 Jan 24 17:01 practice/restore/states/23022023_1431/a
+-rw-r--r--  1 gourabporey  staff  0 Jan 24 17:01 practice/restore/states/23022023_1431/b
+-rw-r--r--  1 gourabporey  staff  0 Jan 18 16:25 practice/restore/states/22022023_2234/demo/ans_table
+-rw-r--r--  1 gourabporey  staff  0 Jan 18 10:10 practice/restore/states/22022023_2234/demo/dir/dir2/dir2/a
+-rw-r--r--  1 gourabporey  staff  0 Jan 18 10:10 practice/restore/states/22022023_2234/demo/dir/dir2/dir2/b
+-rw-r--r--  1 gourabporey  staff  0 Jan 18 10:10 practice/restore/states/22022023_2234/demo/dir/dir2/a
+-rw-r--r--  1 gourabporey  staff  0 Jan 18 10:10 practice/restore/states/22022023_2234/demo/dir/dir2/b
+-rw-r--r--  1 gourabporey  staff  0 Jan 18 10:09 practice/restore/states/22022023_2234/demo/dir/a
+-rw-r--r--  1 gourabporey  staff  0 Jan 18 10:09 practice/restore/states/22022023_2234/demo/dir/b
+-rw-r--r--  1 gourabporey  staff  0 Jan 18 16:25 practice/restore/states/22022023_2234/demo/index
+-rw-r--r--  1 gourabporey  staff  0 Jan 16 17:56 practice/restore/states/22022023_2234/foo/bar/bazz/bcd.txt
+-rw-r--r--  1 gourabporey  staff  0 Jan 16 17:56 practice/restore/states/22022023_2234/foo/bag/bizz/cpg.txt
+total 0
+-rw-r--r--  1 gourabporey  staff  0 Jan 18 09:59 practice/restore/states/22022023_2234/dir/dir2/dir2/b.txxt
+-rw-r--r--  1 gourabporey  staff  0 Jan 18 09:59 practice/restore/states/22022023_2234/dir/dir2/dir2/a.txt
+-rw-r--r--  1 gourabporey  staff  0 Jan 18 09:59 practice/restore/states/22022023_2234/dir/dir2/b.txxt
+-rw-r--r--  1 gourabporey  staff  0 Jan 18 09:59 practice/restore/states/22022023_2234/dir/dir2/a.txt
+-rw-r--r--  1 gourabporey  staff  0 Jan 18 09:59 practice/restore/states/22022023_2234/dir/b.txxt
+-rw-r--r--  1 gourabporey  staff  0 Jan 18 09:59 practice/restore/states/22022023_2234/dir/a.txt
+
+
+
+Command: find practice -empty -name "a*" -type d
+practice/march/march_20/another_directory
+
+
+

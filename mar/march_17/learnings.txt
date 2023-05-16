@@ -1,0 +1,15 @@
+File system and Inode 
+How to link and unlink using 'ln' and 'unlink' respectively
+  soft-link
+  hard-link
+How moving/renaming/removing a link and file itself affecting each other
+
+To see the processes : 'ps' command
+  a
+  A
+  u
+  x
+To kill a process: 'kill' command
+  -signal-number
+To trap a signal: 'trap' command
+  SYNOPSIS: trap command_name signal_number

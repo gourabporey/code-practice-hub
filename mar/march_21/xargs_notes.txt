@@ -1,0 +1,71 @@
+seq 10 | xargs echo number
+number 1 2 3 4 5 6 7 8 9 10
+
+seq 10 | xargs -J $ echo $ number
+1 2 3 4 5 6 7 8 9 10 number
+
+seq 10 | xargs -n 1 -J $ echo $ number
+1 number
+2 number
+3 number
+4 number
+5 number
+6 number
+7 number
+8 number
+9 number
+10 number
+
+seq 10 | xargs -E 5
+1 2 3 4
+
+seq 10 20 | xargs -E 5
+10 11 12 13 14 15 16 17 18 19 20
+
+seq 10 20 | xargs -E 15
+10 11 12 13 14
+
+seq 9 | xargs -I $ echo $ $ $ $ $
+1 1 1 1 1
+2 2 2 2 2
+3 3 3 3 3
+4 4 4 4 4
+5 5 5 5 5
+6 6 6 6 6
+7 7 7 7 7
+8 8 8 8 8
+9 9 9 9 9
+
+seq 9 | xargs -I $ echo $ $ $ $ $ $
+1 1 1 1 1 $
+2 2 2 2 2 $
+3 3 3 3 3 $
+4 4 4 4 4 $
+5 5 5 5 5 $
+6 6 6 6 6 $
+7 7 7 7 7 $
+8 8 8 8 8 $
+9 9 9 9 9 $
+
+seq 9 | xargs -R6 -I $ echo $ $ $ $ $ $
+1 1 1 1 1 1
+2 2 2 2 2 2
+3 3 3 3 3 3
+4 4 4 4 4 4
+5 5 5 5 5 5
+6 6 6 6 6 6
+7 7 7 7 7 7
+8 8 8 8 8 8
+9 9 9 9 9 9
+
+seq 9 | xargs -R6 -I $ echo "$ $ $ $ $ $"
+1 1 1 1 1 1
+2 2 2 2 2 2
+3 3 3 3 3 3
+4 4 4 4 4 4
+5 5 5 5 5 5
+6 6 6 6 6 6
+7 7 7 7 7 7
+8 8 8 8 8 8
+9 9 9 9 9 9
+

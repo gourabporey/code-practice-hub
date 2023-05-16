@@ -1,0 +1,3 @@
+Make our own testing mechanism for increment
+
+Exit with proper exit codes 

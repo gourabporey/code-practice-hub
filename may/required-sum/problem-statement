@@ -1,0 +1,11 @@
+Given a list of numbers and a target sum find any triplet that adds up to the target sum.
+
+case1 :
+  numbers: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+  targetSum: 20
+  triplet can be [1, 9, 10], [2, 8, 10], [3, 8, 9] etc.
+
+case2 :
+  numbers: 3, 6, 8, 1, 2, 9, 10
+  targetSum: 18
+  triplet can be [3, 6, 9] etc.
