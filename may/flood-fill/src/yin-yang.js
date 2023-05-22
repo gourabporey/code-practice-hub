@@ -1,5 +1,3 @@
-const fs = require("fs");
-
 const isOnPerimeter = (point, center, radius) => {
   const [px, py] = point;
   const [cx, cy] = center;
@@ -13,14 +11,12 @@ const isOnPerimeter = (point, center, radius) => {
 const yinYang = radius => {
   const mediumRadius = radius / 2;
   const smallRadius = radius / 4;
-
   const largeDiameter = radius * 2 + 1;
-
   const largeCenter = [radius, radius];
   const upperCenter = [radius / 2, radius];
   const lowerCenter = [radius * 1.5, radius];
 
-  const canvas = new Array(largeDiameter).fill(0).map(e => new Array(largeDiameter).fill(0));
+  const canvas = new Array(largeDiameter).fill(0).map(() => new Array(largeDiameter).fill(0));
 
   for (let row = 0; row < largeDiameter; row++) {
     for (let col = 0; col < largeDiameter; col++) {
@@ -38,8 +34,8 @@ const yinYang = radius => {
       if (isOnLargestCirclePerimeter || isOnSmallestCirclePerimeter || isOnSpiral) {
         canvas[row][col] = 1;
       };
-    }
-  }
+    };
+  };
 
   return canvas;
 };

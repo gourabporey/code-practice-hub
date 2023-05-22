@@ -1,23 +1,16 @@
-const main = list => {
-  const [pointInside, ...boundary] = list;
+const fs = require("fs");
+const { getBoundedPoints } = require("./src/floodfill-using-lookup");
 
-  const boundaryPoints = boundary.reduce((points, point) => {
-    const row = point[0];
-    const col = point[1];
-    points[row] = points[row] || [];
-    return { ...points, [row]: points[row].concat(col) };
-  }, {});
+const main = () => {
+  const source = process.argv[2];
 
-  const pointsInsideLookup = floodfillUsingObject(pointInside, boundaryPoints, {});
+  fs.readFile(source, "utf-8", (err, data) => {
+    if (err) console.error(err.message);
 
-  const pointsInside = [];
-
-  for (row in pointsInsideLookup) {
-    const cols = pointsInsideLookup[row];
-    for (col of cols) {
-      pointsInside.push([+row, col]);
-    };
-  };
-
-  console.log(pointsInside);
+    const list = JSON.parse(data);
+    const boundedPoints = getBoundedPoints(list);
+    console.log(boundedPoints);
+  });
 };
+
+main();
