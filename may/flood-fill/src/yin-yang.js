@@ -1,39 +1,48 @@
 const isOnPerimeter = (point, center, radius) => {
-  const [px, py] = point;
-  const [cx, cy] = center;
+  const [dx, dy] = point.map((val, index) => val - center[index]);
+  return Math.round(Math.hypot(dx, dy)) === radius;
+};
 
-  const dx = px - cx;
-  const dy = py - cy;
+const createEmptyCanvas = (size, filler) => {
+  return Array.from({ length: size }, () => new Array(size).fill(filler));
+};
 
-  return Math.round(Math.sqrt((dx ** 2 + dy ** 2))) === radius;
+const setPixel = function (row, col) {
+  this[row][col] = 1;
 };
 
 const yinYang = radius => {
   const mediumRadius = radius / 2;
   const smallRadius = radius / 4;
-  const largeDiameter = radius * 2 + 1;
+  const diameter = radius * 2 + 1;
   const largeCenter = [radius, radius];
   const upperCenter = [radius / 2, radius];
   const lowerCenter = [radius * 1.5, radius];
 
-  const canvas = new Array(largeDiameter).fill(0).map(() => new Array(largeDiameter).fill(0));
+  const canvas = createEmptyCanvas(diameter, 0);
+  const setPixelOfCanvas = setPixel.bind(canvas);
 
-  for (let row = 0; row < largeDiameter; row++) {
-    for (let col = 0; col < largeDiameter; col++) {
+  const processPoint = ([row, col]) => {
+    const isPointOnPerimeterOf = isOnPerimeter.bind(null, [row, col]);
 
-      const isOnLargestCirclePerimeter = isOnPerimeter([row, col], largeCenter, radius);
+    const isOnLargeCirclePerimeter = isPointOnPerimeterOf(largeCenter, radius);
 
-      const isOnSmallestCirclePerimeter =
-        isOnPerimeter([row, col], upperCenter, smallRadius) ||
-        isOnPerimeter([row, col], lowerCenter, smallRadius);
+    const isOnSmallCirclePerimeter =
+      isPointOnPerimeterOf(upperCenter, smallRadius) ||
+      isPointOnPerimeterOf(lowerCenter, smallRadius);
 
-      const isOnSpiral =
-        col <= radius && isOnPerimeter([row, col], upperCenter, mediumRadius) ||
-        col >= radius && isOnPerimeter([row, col], lowerCenter, mediumRadius);
+    const isOnSpiral =
+      col <= radius && isPointOnPerimeterOf(upperCenter, mediumRadius) ||
+      col >= radius && isPointOnPerimeterOf(lowerCenter, mediumRadius);
 
-      if (isOnLargestCirclePerimeter || isOnSmallestCirclePerimeter || isOnSpiral) {
-        canvas[row][col] = 1;
-      };
+    if (isOnLargeCirclePerimeter || isOnSmallCirclePerimeter || isOnSpiral) {
+      setPixelOfCanvas(row, col);
+    };
+  };
+
+  for (let row = 0; row < diameter; row++) {
+    for (let col = 0; col < diameter; col++) {
+      processPoint([row, col]);
     };
   };
 
