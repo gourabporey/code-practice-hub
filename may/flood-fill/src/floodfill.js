@@ -1,24 +1,33 @@
-const { chunk } = require("../lib/array-utils.js");
+const floodfill = (row, col, list, pointsInside, color) => {
+  if (list[row][col] !== 0) return pointsInside;
+  if (list[row][col] == "c") return pointsInside;
 
-const pointsInside = ([p1, p2]) => {
-  if (p1[0] !== p2[0]) return [];
+  list[row][col] = "c";
+  pointsInside.push([row, col]);
 
-  const points = [];
+  floodfill(row + 1, col, list, pointsInside, color);
+  floodfill(row - 1, col, list, pointsInside, color);
+  floodfill(row, col + 1, list, pointsInside, color);
+  floodfill(row, col - 1, list, pointsInside, color);
 
-  for (let lowerBound = p1[1] + 1; lowerBound < p2[1]; lowerBound++) {
-    const newPoint = [p1[0], lowerBound];
-    points.push(newPoint);
-  };
-
-  return points;
+  return pointsInside;
 };
 
-const floodfill = points => {
-  let pointsPairs = chunk(points, 2, 1);
-  if (pointsPairs[pointsPairs.length - 1].length === 1) pointsPairs.pop();
+const floodfillUsingObject = (point, boundary, pointsInside) => {
+  const [row, col] = point;
+  if (boundary[row].includes(col)) return pointsInside;
 
-  return pointsPairs.flatMap(pointsInside);
+  pointsInside[row] = pointsInside[row] || [];
+  if (pointsInside[row].includes(col)) return pointsInside;
+
+  pointsInside[row] = pointsInside[row].concat(col);
+
+  const a = floodfillUsingObject(row + 1, col, boundary, pointsInside);
+  const b = floodfillUsingObject(row - 1, col, boundary, pointsInside);
+  const c = floodfillUsingObject(row, col + 1, boundary, pointsInside);
+  const d = floodfillUsingObject(row, col - 1, boundary, pointsInside);
+
+  return { ...a, ...b, ...c, ...d };
 };
 
-exports.pointsInside = pointsInside;
-exports.floodfill = floodfill; 
+exports.floodfill = floodfill;

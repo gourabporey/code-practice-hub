@@ -62,18 +62,22 @@ const city = Array.from({ length: 10 }, (_, placeIndex) => {
   return Array.from({ length: 10 }, (_, personIndex) => new Person({ x: placeIndex, y: personIndex }))
 });
 
+const infected = [];
+
 const startInfection = () => {
   const place = Math.floor(Math.random() * 10);
   const community = Math.floor(Math.random() * 10);
   const person = city[place][community];
+
   person.getInfected();
+  infected.push(person);
 }
 
 const exists = value => value !== undefined;
 
 const getNeighbours = person => {
-  const neighbours = [];
   const { x, y } = person.location;
+  const neighbours = [];
 
   for (row = x - 1; row <= x + 1; row++) {
     if (exists(city[row])) {
@@ -90,29 +94,23 @@ const getNeighbours = person => {
 
 const affect = () => {
   setTimeout(() => {
-    const place = Math.floor(Math.random() * 10);
-    const community = Math.floor(Math.random() * 10);
-    const person = city[place][community];
-
-    if (person.isInfected) {
+    infected.forEach(person => {
       getNeighbours(person).forEach(neighbour => {
-        neighbour.getInfected();
+        if (!neighbour.isVaccinated && !neighbour.isInfected) {
+          neighbour.getInfected();
+          infected.push(neighbour);
+        }
       });
-    }
-
-  }, 50);
+    });
+  }, 1000);
 }
 
 const vaccinate = () => {
   setTimeout(() => {
     const place = Math.floor(Math.random() * 10);
-    const community = Math.floor(Math.random() * 10);
-    const person = city[place][community];
-
-    if (!person.isVaccinated) {
-      person.getVaccinated();
-    }
-  }, 2000);
+    const community = city[place];
+    community.forEach(person => person.getVaccinated());
+  }, 3000);
 }
 
 const showStatus = () => {
@@ -129,7 +127,6 @@ const isVaccinated = (person) => {
 const coronaEradicated = () => {
   return city.every(place => place.every(person => isVaccinated(person)));
 }
-
 
 const update = () => {
   affect();
