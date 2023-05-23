@@ -23,17 +23,17 @@ const yinYang = radius => {
   const setPixelOfCanvas = setPixel.bind(canvas);
 
   const processPoint = ([row, col]) => {
-    const isPointOnPerimeterOf = isOnPerimeter.bind(null, [row, col]);
+    const isOnPerimeterOf = isOnPerimeter.bind(null, [row, col]);
 
-    const isOnLargeCirclePerimeter = isPointOnPerimeterOf(largeCenter, radius);
+    const isOnLargeCirclePerimeter = isOnPerimeterOf(largeCenter, radius);
 
-    const isOnSmallCirclePerimeter =
-      isPointOnPerimeterOf(upperCenter, smallRadius) ||
-      isPointOnPerimeterOf(lowerCenter, smallRadius);
+    const isOnUpperSmallCirclePerimeter = isOnPerimeterOf(upperCenter, smallRadius);
+    const isOnLowerSmallCirclePerimeter = isOnPerimeterOf(lowerCenter, smallRadius);
+    const isOnSmallCirclePerimeter = isOnLowerSmallCirclePerimeter || isOnUpperSmallCirclePerimeter;
 
     const isOnSpiral =
-      col <= radius && isPointOnPerimeterOf(upperCenter, mediumRadius) ||
-      col >= radius && isPointOnPerimeterOf(lowerCenter, mediumRadius);
+      col <= radius && isOnPerimeterOf(upperCenter, mediumRadius) ||
+      col >= radius && isOnPerimeterOf(lowerCenter, mediumRadius);
 
     if (isOnLargeCirclePerimeter || isOnSmallCirclePerimeter || isOnSpiral) {
       setPixelOfCanvas(row, col);

@@ -26,6 +26,7 @@ const yellowBox = style("  ", 43);
 const magentaBox = style("  ", 45);
 const cyanBox = style("  ", 46);
 const greenBox = style("  ", 42);
+const whiteBox = style("  ", 47);
 
 const blackStar = style("*", 30);
 const blueStar = style("*", 34);
@@ -33,6 +34,7 @@ const yellowStar = style("*", 33);
 const magentaStar = style("*", 35);
 const cyanStar = style("*", 36);
 const greenStar = style("*", 32);
+const whiteStar = style("*", 37);
 
 exports.printAt = printAt;
 exports.style = style;
@@ -46,6 +48,7 @@ exports.yellowBox = yellowBox;
 exports.cyanBox = cyanBox;
 exports.magentaBox = magentaBox;
 exports.greenBox = greenBox;
+exports.whiteBox = whiteBox;
 
 exports.blackStar = blackStar;
 exports.blueStar = blueStar;
@@ -53,3 +56,4 @@ exports.yellowStar = yellowStar;
 exports.cyanStar = cyanStar;
 exports.magentaStar = magentaStar;
 exports.greenStar = greenStar;
+exports.whiteStar = whiteStar;
