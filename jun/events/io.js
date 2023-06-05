@@ -6,7 +6,11 @@ class StdinReader {
   }
 
   on(event, callback) {
-    this.subcribers[event].push(callback);
+    return this.subcribers[event].push(callback) - 1;
+  }
+
+  remove(event, callbackId) {
+    this.subcribers[event].splice(callbackId, 1);
   }
 
   start() {
@@ -34,6 +38,12 @@ stdinReader.start();
 const logger = (data) => console.log(data);
 
 const printIfNumber = (data) => {
+  if (data.trim() === '0') {
+    stdinReader.remove('data', idOfPrintIfNumber);
+    console.log('printIfNumber stopped executing');
+    return;
+  }
+
   if (!isNaN(+data) && data !== null) {
     console.log(`${data.trim()}: this is a number`);
   }
@@ -41,6 +51,6 @@ const printIfNumber = (data) => {
 
 const showEndMessage = () => console.log('Ended');
 
-stdinReader.on('data', logger);
-stdinReader.on('data', printIfNumber);
+const idOfLogger = stdinReader.on('data', logger);
+const idOfPrintIfNumber = stdinReader.on('data', printIfNumber);
 stdinReader.on('end', showEndMessage);
