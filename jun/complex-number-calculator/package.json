@@ -1,0 +1,19 @@
+{
+   "name": "complex-number-calculator",
+   "version": "1.0.0",
+   "description": "Complex Number Calculator using calculator dependency",
+   "main": "main.js",
+   "directories": {
+      "test": "test"
+   },
+   "scripts": {
+      "test": "node --test",
+      "start": "node main.js"
+   },
+   "author": "Gourab Porey",
+   "license": "ISC",
+   "dependencies": {
+      "calculator": "file:../calculator-with-dependency-injection",
+      "complex_number": "file:../../../projects/js/april/complex-number-assignment"
+   }
+}
