@@ -1,0 +1,83 @@
+<html>
+  <head>
+    <title>Tables</title>
+    <style>
+      body {
+        font-family: system-ui, -apple-system, sans-serif;
+        font-size: 20px;
+        font-weight: 300;
+      }
+
+      #page {
+        width: 50em;
+        margin: 0 auto;
+      }
+
+      #content-header {
+        text-align: center;
+      }
+
+      #marks {
+        margin: 0 auto;
+        width: 20em;
+        border-collapse: collapse;
+        border: 1px solid black;
+      }
+
+      #marks th,
+      td {
+        padding: 0.3em;
+        border: 1px solid black;
+      }
+
+      #marks td:hover {
+        color: #565656;
+      }
+
+      #marks tbody > tr:hover {
+        background-color: #dedede;
+      }
+
+      #marks th {
+        text-align: left;
+        background-color: black;
+        color: white;
+        font-weight: 400;
+        border: 1px solid white;
+      }
+    </style>
+  </head>
+  <body>
+    <main id="page">
+      <header id="content-header">
+        <h1>Students Marks</h1>
+      </header>
+      <table id="marks">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Maths</th>
+            <th>Physics</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Vidita</td>
+            <td>70</td>
+            <td>82</td>
+          </tr>
+          <tr>
+            <td>Biswa</td>
+            <td>67</td>
+            <td>87</td>
+          </tr>
+          <tr>
+            <td>Rishabh</td>
+            <td>69</td>
+            <td>78</td>
+          </tr>
+        </tbody>
+      </table>
+    </main>
+  </body>
+</html>

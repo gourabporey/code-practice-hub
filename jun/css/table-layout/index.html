@@ -1,0 +1,52 @@
+<html>
+  <head>
+    <title>Table Layout</title>
+    <style> 
+      .row {
+        display: table-row;
+      }
+
+      .data {
+        display: table-cell;
+        padding: 10px;
+        width: 33%;
+        background-color: aqua;
+        border-radius: 5px;
+        border: 2px solid #f99999;
+      }
+
+      .row:first-child > .data {
+        background-color: rgba(130, 130, 220, 0.395);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="table">
+      <div class="row">
+        <div class="data">
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Inventore,
+          modi.
+        </div>
+        <div class="data">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt,
+          sunt.
+        </div>
+        <div class="data">
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Est labore
+          deserunt autem maxime repellendus optio repudiandae explicabo ullam ea
+          voluptatem.
+        </div>
+      </div>
+      <div class="row">
+        <div class="data"></div>
+        <div class="data"></div>
+        <div class="data"></div>
+      </div>
+      <div class="row">
+        <div class="data"></div>
+        <div class="data"></div>
+        <div class="data"></div>
+      </div>
+    </div>
+  </body>
+</html>
