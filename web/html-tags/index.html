@@ -1,0 +1,392 @@
+<html>
+  <head>
+    <title>Web Development</title>
+    <style>
+      body {
+        margin: 0;
+        color: #1b1b1b;
+        font-size: 18px;
+        font-family: system-ui, -apple-system, sans-serif;
+        line-height: 1.5em;
+      }
+
+      .fw-300 {
+        font-weight: 300;
+      }
+
+      .back-to-top-icon {
+        width: 1em;
+      }
+
+      header,
+      footer {
+        background-color: #b84a4a;
+        color: white;
+        text-align: center;
+        line-height: 2;
+      }
+
+      .no-line-height {
+        line-height: normal;
+      }
+
+      main {
+        margin: 0 auto;
+        width: 50em;
+      }
+
+      #index {
+        margin: 0 auto;
+        width: 50em;
+      }
+
+      .tags-heading {
+        color: #b84a4a;
+        font-size: 30px;
+        font-weight: 600;
+      }
+
+      .tag-details {
+        border-bottom: 1px solid #b84a4a;
+      }
+
+      a {
+        text-decoration: none;
+        color: slateblue;
+      }
+
+      .space {
+        padding-left: 38em;
+      }
+
+      .card-footer {
+        width: 100%;
+        display: table;
+      }
+
+      .read-more {
+        width: 50%;
+        display: table-cell;
+      }
+
+      .top-link {
+        width: 50%;
+        display: table-cell;
+        text-align: right;
+      }
+
+      .code {
+        font-family: monospace;
+        color: #ff4545;
+        background-color: #87837826;
+      }
+
+      .code-blocks {
+        background-color: rgb(244, 243, 243);
+        line-height: 2;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <h1>Web Development</h1>
+    </header>
+
+    <main class="fw-300">
+      <section id="index">
+        <h2 id="html" class="tags-heading">Index</h2>
+        <ol>
+          <li>
+            <a href="#html">Html Tag</a>
+          </li>
+          <li>
+            <a href="#body">Body Tag</a>
+          </li>
+          <li>
+            <a href="#heading">Heading tags</a>
+          </li>
+          <li>
+            <a href="#font-styles">Font Style Tags</a>
+          </li>
+          <li>
+            <a href="#table">Table</a>
+          </li>
+          <li>
+            <a href="#anchor">Anchor</a>
+          </li>
+          <li>
+            <a href="#img">img</a>
+          </li>
+        </ol>
+      </section>
+
+      <section id="html-tags">
+        <div id="html" class="tag-details">
+          <h2 class="tags-heading">Html Tag</h2>
+
+          <p>
+            <span class="code">&lt;html&gt;</span>
+            tag is the starting section of the html document. Every other
+            sections are inside html tag only. It defines the meaning and
+            structure of web content.
+          </p>
+
+          <p>It is sometimes referred to as the <em>root element.</em></p>
+
+          <div class="card-footer">
+            <div class="read-more">
+              Read more:
+              <a href="https://developer.mozilla.org/en-US/docs/Web/HTML"
+                >html tag</a
+              >
+            </div>
+            <div class="top-link">
+              <a href="#top"
+                ><img
+                  src="./go-up.png"
+                  alt="back to top"
+                  class="back-to-top-icon"
+              /></a>
+            </div>
+          </div>
+        </div>
+
+        <div id="body" class="tag-details">
+          <h2 class="tags-heading">Body Tag</h2>
+          <p>
+            <span class="code">&lt;body&gt;</span>
+            tag is another tag that is one level down html tag. The main
+            document to be shown is written inside body.
+          </p>
+
+          <div class="card-footer">
+            <div class="read-more">
+              Read more:
+              <a
+                href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/body"
+                >body tag</a
+              >
+            </div>
+            <div class="top-link">
+              <a href="#top"
+                ><img
+                  src="./go-up.png"
+                  alt="back to top"
+                  class="back-to-top-icon"
+              /></a>
+            </div>
+          </div>
+        </div>
+
+        <div id="heading" class="tag-details">
+          <h2 class="tags-heading">Heading Tags</h2>
+
+          <p>
+            Heading tags are there to declare headings to documents. It ranges
+            from <span class="code">h1</span> to <span class="code">h6</span>.
+          </p>
+
+          <div class="no-line-height">
+            <h1>This is heading h1</h1>
+            <h2>This is heading h2</h2>
+            <h3>This is heading h3</h3>
+            <h4>This is heading h4</h4>
+            <h5>This is heading h5</h5>
+            <h6>This is heading h6</h6>
+          </div>
+
+          <div class="card-footer">
+            <div class="read-more">
+              Read more:
+              <a
+                href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements"
+                >Heading Tags</a
+              >
+            </div>
+            <div class="top-link">
+              <a href="#top"
+                ><img
+                  src="./go-up.png"
+                  alt="back to top"
+                  class="back-to-top-icon"
+              /></a>
+            </div>
+          </div>
+        </div>
+
+        <div id="font-styles" class="tag-details">
+          <h2 class="tags-heading">Font Styles</h2>
+          <p>We have different tags to style the elements of the document.</p>
+
+          <p>
+            <span class="code">&lt;b&gt;</span> is used to <b>bolden</b> the
+            text inside the tags.
+          </p>
+
+          <p>
+            <span class="code">&lt;u&gt;</span> is used to <u>underline</u> the
+            text inside the tags.
+          </p>
+
+          <p>
+            <span class="code">&lt;i&gt;</span> is used to <i>italic</i> the
+            text inside the tags.
+          </p>
+
+          <div class="card-footer">
+            <div class="read-more">
+              Read more:
+              <a
+                href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/b"
+                >Bring Attention Tag</a
+              >,
+              <a
+                href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/u"
+                >Underline Tag</a
+              >,
+              <a
+                href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/i"
+                >Italic Tag</a
+              >
+            </div>
+            <div class="top-link">
+              <a href="#top"
+                ><img
+                  src="./go-up.png"
+                  alt="back to top"
+                  class="back-to-top-icon"
+              /></a>
+            </div>
+          </div>
+        </div>
+
+        <div id="table" class="tag-details">
+          <h2 class="tags-heading">Table</h2>
+
+          <p>
+            <span class="code">&lt;table&gt;</span> tag is used to create
+            tables.
+          </p>
+
+          <ul>
+            <li>
+              <span class="code">&lt;tr&gt;</span> - To create table rows.
+            </li>
+            <li>
+              <span class="code">&lt;td&gt;</span> - To create table data.
+            </li>
+          </ul>
+
+          <h4>Code</h4>
+          <pre class="code-blocks">
+        &lt;table&gt;
+        &lt;tr&gt;
+          &lt;td&gt;ID&lt;/td&gt;
+          &lt;td&gt;Name&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;39529&lt;/td&gt;
+          &lt;td&gt;Gourab Porey&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;39532&lt;/td&gt;
+          &lt;td&gt;Milan Chakraborty&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/table&gt; </pre
+          >
+
+          <h4>Output</h4>
+          <table>
+            <tr>
+              <td>ID</td>
+              <td>Name</td>
+            </tr>
+            <tr>
+              <td>39529</td>
+              <td>Gourab Porey</td>
+            </tr>
+            <tr>
+              <td>39532</td>
+              <td>Milan Chakraborty</td>
+            </tr>
+          </table>
+
+          <div class="card-footer">
+            <div class="read-more">
+              Read more:
+              <a
+                href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/table"
+                >Table Tag</a
+              >
+            </div>
+            <div class="top-link">
+              <a href="#top"
+                ><img
+                  src="./go-up.png"
+                  alt="back to top"
+                  class="back-to-top-icon"
+              /></a>
+            </div>
+          </div>
+        </div>
+
+        <div id="anchor" class="tag-details">
+          <h2 class="tags-heading">Anchor Tag</h2>
+          <p>
+            The &lt;a&gt; element create a hyperlink to web pages, files, inpage
+            etc which a URL can address.
+          </p>
+          <p>
+            Content with each a element should indicate the target address. If
+            the href attribute is set properly pressing the enter key while
+            focused on the &lt;a&gt; element will activate it.
+          </p>
+          <pre class="code-blocks">
+                &lt;a href="https://google.com"&gt;Visit Google&lt;/a&gt;</pre
+          >
+          <a href="https://google.com">Visit Google</a>
+          <p>
+            To open the link in new page, we can specify <br />
+            <span class="code">target _blank</span>: usually a new tab, but
+            users can configure browsers to open a new window instead.
+          </p>
+          <pre class="code-blocks">
+                &lt;a href="https://google.com" target="_blank"&gt;Visit Google&lt;/a&gt;</pre
+          >
+          <a href="https://google.com" target="_blank">Visit Google</a>
+          <p>
+            <b>Read more: </b
+            ><a
+              href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a"
+              >anchor tag</a
+            >
+          </p>
+        </div>
+
+        <div id="img" class="tag-details">
+          <h2 class="tags-heading">img Tag</h2>
+          <p>
+            The <span class="code">img</span> element
+            <em>embed an image</em> into the html page.
+          </p>
+          <p>
+            It has attribute <span class="code">src</span> that contains the
+            <em>path to the image</em> to be embedded.
+          </p>
+          <p>
+            <b>Read more: </b
+            ><a
+              href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img"
+              >img tag</a
+            >
+            <span></span>
+            <a href="#top">go to top</a>
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer>copyright © 2023. gourab. All rights reserved.</footer>
+  </body>
+</html>

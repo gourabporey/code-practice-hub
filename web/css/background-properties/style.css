@@ -1,0 +1,39 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Tilt Prism', cursive;
+}
+
+body {
+  background: url('./pexels-evie-shaffer.jpeg');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.page {
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.538);
+}
+
+.header {
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 200px;
+  width: 50%;
+  text-align: center;
+  background: url(https://www.allaboutgardening.com/wp-content/uploads/2022/01/Types-of-Flowers-in-Garden-1200x667.jpg);
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+.header h1 {
+  font-size: 120px;
+  color: transparent;
+}
+
+.header p {
+  font-size: 35px;
+  font-family: cursive;
+  color: #0000006b;
+}

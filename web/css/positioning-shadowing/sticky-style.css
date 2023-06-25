@@ -1,0 +1,28 @@
+* {
+  margin: 0;
+  padding: 0;
+  border: 1px dotted blue;
+}
+
+.page {
+  width: 80%;
+  margin: 0 auto;
+  height: 100%;
+  overflow: scroll;
+  position: relative;
+}
+
+.side-bar {
+  height: 300px;
+  width: 100px;
+  position: sticky;
+  position: -webkit-sticky;
+  top: 50px;
+}
+
+.content {
+  position: relative;
+  width: 500px;
+  bottom: 300px;
+  left: 500px;
+}

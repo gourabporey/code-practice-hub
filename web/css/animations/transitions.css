@@ -1,0 +1,26 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: rgb(50, 61, 65);
+}
+
+.box {
+  background-color: white;
+  width: 300px;
+  aspect-ratio: 1;
+  position: relative;
+  margin: auto;
+  top: 200px;
+
+  transition-property: background, border-radius;
+  transition-duration: 2s, 3s;
+}
+
+.box:hover {
+  background: red;
+  border-radius: 50%;
+}

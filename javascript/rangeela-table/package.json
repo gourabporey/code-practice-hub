@@ -1,0 +1,15 @@
+{
+   "name": "rangeela-table",
+   "version": "1.0.0",
+   "description": "Get colored table ",
+   "main": "main.js",
+   "scripts": {
+      "test": "node --test",
+      "start": "node main.js"
+   },
+   "author": "Gourab Porey",
+   "license": "ISC",
+   "dependencies": {
+      "colors": "^1.4.0"
+   }
+}
