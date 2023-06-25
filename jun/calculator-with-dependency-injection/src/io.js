@@ -1,39 +1,20 @@
 class IO {
-  #in
-  #out
-  #timer
+  #in;
+  #out;
 
-  constructor(inputStream, outputStream, timer) {
+  constructor(inputStream, outputStream) {
     this.#in = inputStream;
     this.#out = outputStream;
-    this.#timer = timer;
   }
 
   watchInputLine(onNewLine) {
     const stdin = this.#in;
-    const timer = this.#timer;
-
     stdin.setEncoding('utf8');
-
-    const collectInput = () => {
-      const chunk = stdin.read();
-
-      if (!chunk) {
-        const readStreamEnded = stdin._readableState.ended;
-        if (readStreamEnded) timer.clearInterval(readTimer);
-        return;
-      }
-
-      let content = chunk.trim();
-      const lines = content.split('\n');
-      lines.forEach((line) => onNewLine(line));
-    }
-
-    const readTimer = timer.setInterval(collectInput, 500);
+    stdin.on('data', onNewLine);
   }
 
   writeLine(line) {
-    this.#out.write(line + '\n');
+    this.#out.write(line.toString() + '\n');
   }
 }
 

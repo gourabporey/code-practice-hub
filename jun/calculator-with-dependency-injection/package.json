@@ -1,0 +1,15 @@
+{
+   "name": "calculator",
+   "version": "1.0.0",
+   "description": "Calculator",
+   "main": "index.js",
+   "directories": {
+      "test": "test"
+   },
+   "scripts": {
+      "test": "node --test",
+      "start": "node calc.js"
+   },
+   "author": "Vivek Haridas",
+   "license": "ISC"
+}
