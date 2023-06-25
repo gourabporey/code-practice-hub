@@ -4,7 +4,7 @@
 
 - [Flood Fill](./cool-stuffs/flood-fill)
 - [January](./cool-stuffs/jan)
-- [Project Euler Problems](./cool-stuffs/project-euler-problems)
+- [Project Euler Problems](https://github.com/gourabporey/project-euler)
 
 ## JavaScript
 
