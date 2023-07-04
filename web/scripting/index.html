@@ -29,7 +29,18 @@
     </style>
 
     <script>
-      const displayCountOfTags = (HTMLElement) => {
+      const countOf = (tagName) =>
+        document.getElementsByTagName(tagName).length;
+
+      const displayCountOfTags = (tagNames) => {
+        const tagsCounts = tagNames.map(
+          (tagName) => tagName + ':' + countOf(tagName)
+        );
+
+        HTMLElement.innerText = tagsCounts.join('\n');
+      };
+
+      window.onload = () => {
         const tagNames = [
           'div',
           'span',
@@ -47,19 +58,9 @@
           'style',
           'link',
         ];
-
-        const tagsCounts = tagNames.map(
-          (tagName) =>
-            tagName + ':' + document.getElementsByTagName(tagName).length
-        );
-
-        HTMLElement.innerText = tagsCounts.join('\n');
-      };
-
-      window.onload = () => {
         const pageStat = document.getElementById('page-stats');
         pageStat.innerText = 'Computing Page Stats...';
-        setTimeout(displayCountOfTags, 2000, pageStat);
+        setTimeout(displayCountOfTags, 2000, tagNames, pageStat);
       };
     </script>
   </head>

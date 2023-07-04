@@ -1,0 +1,64 @@
+<html>
+  <head>
+    <script>
+      const depthOf = (element) => {
+        if (element.children.length === 0) return 0;
+        return 1 + Math.max(...Array.from(element.children).map(depthOf));
+      };
+
+      const deepestElement = (element, depth) => {
+        if (element.children.length === 0) return [element, depth];
+
+        depth++;
+
+        const childrenMaxDepths = Array.from(element.children).map((child) =>
+          deepestElement(child, depth)
+        );
+
+        return childrenMaxDepths.reduce(
+          ([element, maxDepth], [currentElement, currentElementDepth]) => {
+            return currentElementDepth > maxDepth
+              ? [currentElement, currentElementDepth]
+              : [element, maxDepth];
+          }
+        );
+      };
+
+      window.onload = () => {
+        const [element] = deepestElement(document, 0);
+
+        setTimeout(() => {
+          document.getElementById(
+            'deepest-element'
+          ).innerText = `The deepest element is : ${element.localName}`;
+        }, 2000);
+      };
+    </script>
+  </head>
+  <body>
+    <div id="root">
+      <main>
+        <div id="1">
+          <div id="2">This is div 2.</div>
+          <div id="3">
+            <div id="4">
+              <div id="5">This is div 5.</div>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <aside>
+        <nav>
+          <ul>
+            <li>a</li>
+            <li>b</li>
+            <li>c</li>
+          </ul>
+        </nav>
+      </aside>
+    </div>
+
+    <div id="deepest-element">hello</div>
+  </body>
+</html>
