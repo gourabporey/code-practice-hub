@@ -1,0 +1,44 @@
+<html>
+  <head>
+    <title>TODOs</title>
+    <script>
+      const isNotValid = (todo) => todo === null || todo === '';
+
+      const getTodoContainer = () => document.querySelector('#todos');
+
+      const createTodoElement = (todo) => {
+        const todoElement = document.createElement('li');
+        todoElement.innerText = todo;
+        return todoElement;
+      };
+
+      const delayedPrompt = (promptMsg, cb, timeout = 100) => {
+        setTimeout(() => {
+          cb(prompt(promptMsg));
+        }, timeout);
+      };
+
+      const collectTodos = () => {
+        delayedPrompt(
+          'Enter Todo',
+          (todo) => {
+            if (isNotValid(todo)) return;
+            const todoContainer = getTodoContainer();
+            const todoElement = createTodoElement(todo);
+            todoContainer.appendChild(todoElement);
+            collectTodos();
+          },
+          100
+        );
+      };
+
+      window.onload = collectTodos;
+    </script>
+  </head>
+  <body>
+    <main>
+      <h1>TODOs</h1>
+      <ul id="todos"></ul>
+    </main>
+  </body>
+</html>
