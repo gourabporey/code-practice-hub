@@ -1,0 +1,86 @@
+<html>
+  <head>
+    <title>User Data Validator</title>
+    <link
+      rel="stylesheet"
+      href="style.css" />
+
+    <script>
+      const takeUserInput = () => {
+        const name = prompt('Enter user name').trim();
+        const id = prompt('Enter your id').trim();
+        return { name, id };
+      };
+
+      const createTable = (...rows) => {
+        const table = document.createElement('table');
+        table.append(...rows);
+        return table;
+      };
+
+      const createTableRow = (...args) => {
+        const tr = document.createElement('tr');
+        tr.append(...args);
+        return tr;
+      };
+
+      const createTableHeading = (data) => {
+        const th = document.createElement('th');
+        th.innerText = data;
+        return th;
+      };
+
+      const createTableData = (data) => {
+        const td = document.createElement('td');
+        td.innerText = data;
+        return td;
+      };
+
+      const createUserInfoTable = (name, id) => {
+        const nameHeading = createTableHeading('NAME');
+        const nameData = createTableData(name.toUpperCase());
+        const nameRow = createTableRow(nameHeading, nameData);
+
+        const idHeading = createTableHeading('ID');
+        const idData = createTableData(id);
+        const idRow = createTableRow(idHeading, idData);
+
+        return createTable(idRow, nameRow);
+      };
+
+      const validateUser = (id, name) => {
+        const users = {
+          39529: 'gourab',
+          39532: 'milan',
+          39552: 'utsab',
+          39541: 'biswa',
+          39547: 'vidita',
+        };
+
+        return users[id] === name.toLowerCase();
+      };
+
+      const main = () => {
+        const { name, id } = takeUserInput();
+        const isUserPresent = validateUser(id, name);
+
+        if (!isUserPresent) {
+          alert('User not found');
+          return;
+        }
+
+        const userInfoTable = createUserInfoTable(name, id);
+        const details = document.querySelector('.details');
+        details.appendChild(userInfoTable);
+      };
+
+      window.onload = main;
+    </script>
+  </head>
+  <body>
+    <main id="page">
+      <header><h1></h1></header>
+      <div class="details"></div>
+    </main>
+  </body>
+</html>

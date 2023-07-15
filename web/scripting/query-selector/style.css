@@ -1,0 +1,26 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-size: 18px;
+  font-family: system-ui, sans-serif;
+}
+
+main {
+  width: 50%;
+  margin: 0 auto;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+table {
+  border-collapse: collapse;
+  margin: 100px;
+  border: 1px solid black;
+}
+
+table * {
+  padding: 10px;
+}
