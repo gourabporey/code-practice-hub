@@ -1,0 +1,175 @@
+
+<!-- saved from url=(0033)http://127.0.0.1:5500/index.html# -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Thoughtworks Okta Dashboard</title>
+    
+  <link rel="stylesheet" href="./Thoughtworks Okta Dashboard_files/style.css"></head>
+  <body>
+    <header>
+      <div id="logo-container">
+        <h1>thoughtworks</h1>
+      </div>
+
+      <div id="search-bar">
+        <div class="search-icon">🔎</div>
+        <div class="search-box-placeholder c-gray">Search your apps</div>
+      </div>
+
+      <div id="user-details">
+        <div>
+          <span class="user-name fw-600 fs-small">Gourab</span>
+          <span class="organisation-name fs-small">Thoughtworks</span>
+        </div>
+        <div class="dropdown-icon">⌄</div>
+      </div>
+    </header>
+
+    <div id="dashboard" class="row expanded-height vertical-center">
+      <aside>
+        <nav>
+          <ul>
+            <li>
+              My Apps
+              <ul>
+                <li>Work</li>
+                <li>Imp</li>
+                <li>Development</li>
+              </ul>
+            </li>
+
+            <li>Notifications</li>
+            <li>Add apps</li>
+          </ul>
+        </nav>
+      </aside>
+
+      <main>
+        <section id="user-apps">
+          <h2>My Apps</h2>
+
+          <section class="app-category">
+            <h3>Work</h3>
+
+            <div class="app-container">
+              <div class="app">
+                <div class="app-logo"></div>
+                <div class="app-name">Greenhouse</div>
+              </div>
+              <div class="app">
+                <div class="app-logo"></div>
+                <div class="app-name">Greenhouse</div>
+              </div>
+              <div class="app">
+                <div class="app-logo"></div>
+                <div class="app-name">Greenhouse</div>
+              </div>
+              <div class="app">
+                <div class="app-logo"></div>
+                <div class="app-name">Greenhouse</div>
+              </div>
+              <div class="app">
+                <div class="app-logo"></div>
+                <div class="app-name">Greenhouse</div>
+              </div>
+              <div class="app">
+                <div class="app-logo"></div>
+                <div class="app-name">Greenhouse</div>
+              </div>
+              <div class="app">
+                <div class="app-logo"></div>
+                <div class="app-name">Greenhouse</div>
+              </div>
+              <div class="app">
+                <div class="app-logo"></div>
+                <div class="app-name">Greenhouse</div>
+              </div>
+              <div class="app">
+                <div class="app-logo"></div>
+                <div class="app-name">Greenhouse</div>
+              </div>
+              <div class="app">
+                <div class="app-logo"></div>
+                <div class="app-name">Greenhouse</div>
+              </div>
+              <div class="app">
+                <div class="app-logo"></div>
+                <div class="app-name">Greenhouse</div>
+              </div>
+              <div class="app">
+                <div class="app-logo"></div>
+                <div class="app-name">Greenhouse</div>
+              </div>
+              <div class="app">
+                <div class="app-logo"></div>
+                <div class="app-name">Greenhouse</div>
+              </div>
+            </div>
+          </section>
+
+          <section class="app-category">
+            <h3>Imp</h3>
+
+            <div class="app-container">
+              <div class="app">
+                <div class="app-logo"></div>
+                <div class="app-name">Greenhouse</div>
+              </div>
+              <div class="app">
+                <div class="app-logo"></div>
+                <div class="app-name">Greenhouse</div>
+              </div>
+              <div class="app">
+                <div class="app-logo"></div>
+                <div class="app-name">Greenhouse</div>
+              </div>
+            </div>
+          </section>
+        </section>
+
+        <section id="support">
+          <h2>Support</h2>
+          <p>Help: <a href="http://127.0.0.1:5500/index.html#">https://help.thoughtworks.net/hc</a></p>
+        </section>
+      </main>
+    </div>
+  <!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+
+
+</body></html>

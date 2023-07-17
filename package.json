@@ -1,0 +1,14 @@
+{
+  "name": "code-practice-hub",
+  "version": "1.0.0",
+  "description": "This is container of the practice codes",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "gourabporey",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^8.45.0"
+  }
+}

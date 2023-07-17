@@ -1,0 +1,41 @@
+[
+  {
+    "filePath": "/Users/gourabporey/practice/javascript/eslint/index.js",
+    "messages": [
+      {
+        "ruleId": "no-const-assign",
+        "severity": 2,
+        "message": "'numbers' is constant.",
+        "line": 10,
+        "column": 1,
+        "nodeType": "Identifier",
+        "messageId": "const",
+        "endLine": 10,
+        "endColumn": 8
+      },
+      {
+        "ruleId": "no-else-return",
+        "severity": 1,
+        "message": "Unnecessary 'else' after 'return'.",
+        "line": 15,
+        "column": 8,
+        "nodeType": "ReturnStatement",
+        "messageId": "unexpected",
+        "endLine": 15,
+        "endColumn": 21,
+        "fix": {
+          "range": [162, 229],
+          "text": "(number) => {\n  if (number > 0) return true;\n  return false;\n}"
+        }
+      }
+    ],
+    "suppressedMessages": [],
+    "errorCount": 1,
+    "fatalErrorCount": 0,
+    "warningCount": 1,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 1,
+    "source": "class Demo {\n  constructor() {\n    this.a = 0;\n    this.b = 1;\n    this.c = 2;\n  }\n}\n\nconst numbers = [1, 2, 3, 4];\nnumbers = 45;\nnumbers[2];\n\nconst isPositive = (number) => {\n  if (number > 0) return true;\n  else return false;\n};\n",
+    "usedDeprecatedRules": []
+  }
+]

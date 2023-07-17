@@ -23,7 +23,7 @@
         return tr;
       };
 
-      const createTableElement = (type, data) => {
+      const createTableCell = (type, data) => {
         const element = document.createElement(TABLE[type]);
         element.innerText = data;
         return element;
@@ -35,8 +35,8 @@
             e.toString().toUpperCase()
           );
 
-          const headingCell = createTableElement('heading', heading);
-          const dataCell = createTableElement('data', data);
+          const headingCell = createTableCell('heading', heading);
+          const dataCell = createTableCell('data', data);
 
           return createTableRow(headingCell, dataCell);
         });
@@ -95,6 +95,8 @@
 
       const main = () => {
         const { name, id } = takeUserInput();
+        // const { name, id } = { name: 'gourab', id: 39529 }; // correct
+        // const { name, id } = { name: 'gourab', id: 39523 }; // wrong
         const isUserPresent = users.validateUser(id, name);
 
         if (!isUserPresent) {

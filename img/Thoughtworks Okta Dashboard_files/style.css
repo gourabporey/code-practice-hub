@@ -1,0 +1,163 @@
+:root {
+  --app-category-width: 65em;
+  --app-width: 10em;
+  --gap-between-apps: 1em;
+  --header-height: 5%;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-size: 16px;
+  font-family: system-ui, sans-serif;
+  line-height: 1.7em;
+}
+
+h1 {
+  font-size: 1.6em;
+}
+
+h2 {
+  font-size: 1.5em;
+}
+
+h3 {
+  font-size: 1.2em;
+}
+
+h2,
+h3 {
+  margin: 1em 0;
+}
+
+header {
+  width: 100%;
+  height: var(--header-height);
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  border-bottom: 1px solid gray;
+}
+
+.fw-600 {
+  font-weight: 600;
+}
+
+.fs-small {
+  font-size: 0.8em;
+}
+
+.c-gray {
+  color: gray;
+}
+
+#logo-container,
+#user-details {
+  width: 10%;
+}
+
+#logo-container {
+  text-align: center;
+}
+
+#search-bar {
+  width: 30%;
+  padding: 5px;
+  margin-left: 100px;
+  margin-right: auto;
+
+  display: flex;
+  gap: 1em;
+
+  border: 1px solid gray;
+  border-radius: 5px;
+}
+
+#search-bar * {
+  line-height: normal;
+}
+
+#user-details {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#user-details > *:first-child {
+  width: 50%;
+}
+
+#dashboard {
+  height: calc(100% - var(--header-height));
+  width: 100%;
+
+  display: flex;
+  overflow: scroll;
+
+  background-color: rgb(245, 245, 247);
+}
+
+aside {
+  width: 10%;
+  padding: 1em 2em;
+
+  position: sticky;
+  top: 0;
+
+  background-color: rgb(110, 157, 169);
+}
+
+li > ul > li {
+  list-style-type: none;
+}
+
+main {
+  width: 90%;
+}
+
+#user-apps {
+  width: var(--app-category-width);
+  margin: 0 auto;
+}
+
+.app-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-between-apps);
+}
+
+.app {
+  width: var(--app-width);
+  padding: 0.5em;
+  aspect-ratio: 1;
+
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+
+  border: 1px solid gray;
+  border-radius: 5px;
+}
+
+.app-logo {
+  width: 70%;
+  aspect-ratio: 1;
+  background-color: #d4d4d4;
+}
+
+.row {
+  display: flex;
+}
+
+.expanded-height {
+  height: 95%;
+}
+
+#support {
+  padding: 3em;
+}

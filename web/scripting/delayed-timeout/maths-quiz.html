@@ -1,0 +1,54 @@
+<html>
+  <head>
+    <title>Maths Quiz</title>
+    <script>
+      const getRandomOperand = () => Math.round(Math.random() * 10);
+
+      const getRandomOperator = () =>
+        ['+', '-', '*', '/'][getRandomOperand() % 4];
+
+      const evaluate = (a, op, b) => {
+        const operations = {
+          '+': a + b,
+          '-': a - b,
+          '*': a * b,
+          '\\': a / b,
+        };
+
+        return operations[op];
+      };
+
+      const delayedPrompt = (promptMsg, cb, timeout = 100) => {
+        setTimeout(() => {
+          cb(prompt(promptMsg));
+        }, timeout);
+      };
+
+      const askQuestion = () => {
+        const operand1 = getRandomOperand();
+        const operand2 = getRandomOperand();
+        const operator = getRandomOperator();
+        const answer = evaluate(operand1, operator, operand2);
+
+        const equation = `${operand1} ${operator} ${operand2}`;
+        const message = equation + ' = ? ';
+
+        delayedPrompt(message, (userInput) => {
+          const resultMsg = getResultMsg(+userInput, answer);
+          const answerElement = createAnswerElement(resultMsg);
+          const answers = getAnswersElement();
+          answers.appendChild(answerElement);
+          askQuestion();
+        });
+      };
+
+      window.onload = askQuestion;
+    </script>
+  </head>
+  <body>
+    <main>
+      <h2>Results</h2>
+      <ol id="results"></ol>
+    </main>
+  </body>
+</html>
