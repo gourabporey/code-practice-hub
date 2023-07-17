@@ -3,20 +3,14 @@ const promptAndUpdate = (element) => {
   element.innerText += msg + '\n';
 };
 
-const colorTextToRed = (element) => {
-  element.classList.remove('green');
-  element.classList.add('red');
-};
-
-const colorTextToGreen = (element) => {
-  element.classList.remove('red');
-  element.classList.add('green');
+const changeColor = (element) => {
+  element.className = element.className === 'red' ? 'green' : 'red';
 };
 
 const updateMainDiv = () => {
   const mainDiv = document.querySelector('div#main-div');
-  mainDiv.onmouseenter = (event) => colorTextToRed(event.target);
-  mainDiv.onmouseleave = (event) => colorTextToGreen(event.target);
+  mainDiv.onmouseenter = (event) => changeColor(event.target);
+  mainDiv.onmouseleave = (event) => changeColor(event.target);
   mainDiv.onclick = (event) => promptAndUpdate(event.target);
 };
 
