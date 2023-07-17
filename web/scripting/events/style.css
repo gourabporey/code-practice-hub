@@ -1,0 +1,19 @@
+main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#main-div {
+  width: 200px;
+  aspect-ratio: 1;
+  border: 1px solid black;
+}
+
+.red {
+  color: red;
+}
+
+.green {
+  color: green;
+}
