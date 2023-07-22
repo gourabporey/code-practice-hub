@@ -6,6 +6,37 @@
   <body>
     <main id="root">
       <input type="text" id="comment" />
+
+      <section id="chekbox">
+        <h2>Todo</h2>
+
+        <div class="todo-item">
+          <input type="checkbox" name="todo" id="todo-item-1" />
+          <label for="todo-item-1">Buy Milk</label>
+        </div>
+
+        <div class="todo-item">
+          <input type="checkbox" name="todo" id="todo-item-2" />
+          <label for="todo-item-2">Buy groceries</label>
+        </div>
+      </section>
+
+      <section id="text-area">
+        <label for="comment-area">Enter your comment: </label>
+        <textarea
+          name="comment"
+          id="comment-area"
+          cols="30"
+          rows="10"></textarea>
+      </section>
+
+      <section id="select-section" style="margin-top: 20px">
+        <label for="select-country">Select your country: </label>
+        <select name="country" id="select-country">
+          <option value="india">India</option>
+          <option value="pakistan">Pakistan</option>
+        </select>
+      </section>
     </main>
   </body>
 </html>
