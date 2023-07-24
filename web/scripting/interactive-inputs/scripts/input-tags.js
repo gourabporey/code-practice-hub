@@ -23,14 +23,21 @@ const printText = (text) => {
   console.log(text);
 };
 
+const appendToOutput = (text) => {
+  const outputSection = document.querySelector('#output');
+  const para = document.createElement('p');
+  para.innerText = text;
+  outputSection.appendChild(para);
+};
+
 window.onload = () => {
   const inputBox = getInputBox();
-  getInputOnEnter(inputBox, printText);
+  getInputOnEnter(inputBox, appendToOutput);
 
   const textArea = document.querySelector('#comment-area');
-  getInputOnEnter(textArea, printText);
-  getInputOnChange(textArea, printText);
+  getInputOnEnter(textArea, appendToOutput);
+  getInputOnChange(textArea, appendToOutput);
 
   const countrySelection = document.querySelector('#select-country');
-  getOptionValue(countrySelection, printText);
+  getOptionValue(countrySelection, appendToOutput);
 };

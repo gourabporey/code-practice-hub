@@ -14,31 +14,26 @@ const updateMainDiv = () => {
   mainDiv.onclick = (event) => promptAndUpdate(event.target);
 };
 
+const printEventData = (event, msg) => {
+  console.log(`${msg}, ID: ${event.target.id}`);
+};
+
 const consoleOnClick = () => {
   const child1 = document.querySelector('#child1');
-  child1.onclick = (event) => {
-    console.log(`Child 1 : ${event.target.id}`);
-    event.secretMsg = 'This is a secret message';
-  };
-
-  child1.addEventListener('click', (event) => {
-    console.log(`Child 1 : ${event.target.id}`);
-    console.log(event.secretMsg);
-  });
+  child1.onclick = (event) => printEventData(event, 'Child 1');
+  child1.addEventListener('click', (event) => printEventData(event, 'Child 1'));
 
   const child2 = document.querySelector('#child2');
-  child2.onclick = (event) => {
-    console.log(`Child 2 : ${event.target.id}`);
-  };
+  child2.onclick = (event) => printEventData(event, 'Child 2');
 
   const child3 = document.querySelector('#child3');
-  child3.onclick = (event) => console.log(`Child 3 : ${event.target.id}`);
+  child3.onclick = (event) => printEventData(event, 'Child 3');
 
-  const father = document.querySelector('#father');
-  father.onclick = (event) => {
-    console.log(`Father : ${event.target.id}`);
-    console.log(event.secretMsg);
-  };
+  const Father = document.querySelector('#father');
+  Father.onclick = (event) => printEventData(event, 'Father');
+
+  const grandFather = document.querySelector('#grand-father');
+  grandFather.onclick = (event) => printEventData(event, 'Grand Father');
 };
 
 window.onload = () => {
