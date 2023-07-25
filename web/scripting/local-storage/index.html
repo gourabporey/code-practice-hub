@@ -1,0 +1,85 @@
+<html lang="en">
+  <head>
+    <title>Local Storage</title>
+
+    <style>
+      * {
+        font-size: 50px;
+      }
+
+      #root {
+        display: flex;
+        gap: 10px;
+      }
+
+      input,
+      span {
+        display: inline-block;
+        width: 100px;
+        height: 100px;
+        border: 1px solid black;
+      }
+
+      .count {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+
+    <script>
+      class Counter {
+        constructor(count) {
+          this.count = count;
+        }
+
+        decrement() {
+          this.count--;
+        }
+
+        increment() {
+          this.count++;
+        }
+      }
+
+      const renderCount = (count) => {
+        const countBox = document.querySelector('.count');
+        countBox.innerText = count;
+      };
+
+      const storeAndRenderCount = (count) => {
+        localStorage.setItem('count', count);
+        renderCount(count);
+      };
+
+      const setupCounter = () => {
+        const initialCount = localStorage.getItem('count') || 0;
+        const counter = new Counter(initialCount);
+
+        const incrementBtn = document.querySelector('.increment-btn');
+        const decrementBtn = document.querySelector('.decrement-btn');
+
+        incrementBtn.onclick = () => {
+          counter.increment();
+          storeAndRenderCount(counter.count);
+        };
+
+        decrementBtn.onclick = () => {
+          counter.decrement();
+          storeAndRenderCount(counter.count);
+        };
+
+        storeAndRenderCount(counter.count);
+      };
+
+      window.onload = setupCounter;
+    </script>
+  </head>
+  <body>
+    <main id="root">
+      <input type="button" value="+" class="increment-btn" />
+      <span class="count"></span>
+      <input type="button" value="-" class="decrement-btn" />
+    </main>
+  </body>
+</html>
