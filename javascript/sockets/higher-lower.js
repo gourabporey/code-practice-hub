@@ -7,48 +7,89 @@ const generateRandom = (range) => {
   return Math.round(Math.random() * (to - from)) + from;
 };
 
-const averageOf = ({ from, to }) => Math.round((from + to) / 2);
+class Game {
+  constructor(number, noOfChances) {
+    this.number = number;
+    this.noOfChances = noOfChances;
+    this.hasWon = false;
+    this.isOver = false;
+  }
 
-const compareSecondToFirst = (a, b) => {
-  if (a === b) return 'equal';
-  if (a > b) return 'low';
-  return 'high';
-};
+  accountGuess(number) {
+    this.noOfChances--;
+
+    const equal = number === this.number;
+    const high = number > this.number;
+    const low = number < this.number;
+
+    if (equal) {
+      this.hasWon = true;
+      this.isOver = true;
+    }
+
+    if (this.noOfChances === 0) this.isOver = true;
+
+    return {
+      isOver: this.isOver,
+      hasWon: this.hasWon,
+      isOver: this.isOver,
+      stat: { high, low },
+    };
+  }
+}
+
+class GameSolver {
+  constructor({ from, to }) {
+    this.from = from;
+    this.to = to;
+    this.number = this.getAverage(from, to);
+  }
+
+  getAverage(a, b) {
+    return Math.floor((a + b) / 2);
+  }
+
+  giveSuggestion({ high }) {
+    if (high) {
+      this.to = this.number;
+    } else {
+      this.from = this.number + 1;
+    }
+
+    this.number = this.getAverage(this.to, this.from);
+
+    return this.number;
+  }
+}
 
 const playGuessGame = (client, range, noOfChances) => {
   client.write('Welcome to Guess Game\n');
+  client.write(`Guess a number between ${range.from} to ${range.to}\n`);
   const secretNumber = generateRandom({ ...range });
-  const numbers = { ...range };
-  let totalAttemptsMade = 0;
+
+  const game = new Game(secretNumber, noOfChances);
+  const gameSolver = new GameSolver(range);
 
   const checkNumberAndUpdate = (numberText) => {
-    totalAttemptsMade++;
-
     const number = +numberText;
-    const result = compareSecondToFirst(secretNumber, number);
+    const { isOver, hasWon, stat } = game.accountGuess(number);
 
-    console.log(`${number}: ${result}`);
+    const gameOverMsg = hasWon ? 'Yooooo! You won\n' : 'Game Over\n';
 
-    let isGameOver = false;
-
-    if (result === 'equal') {
-      isGameOver = true;
-      client.write('You Won!!!\n');
-    }
-
-    if (totalAttemptsMade === noOfChances) {
-      isGameOver = true;
-      client.write('Game over\n');
-    }
-
-    if (isGameOver) {
+    if (isOver) {
+      client.write(gameOverMsg);
       client.end();
       return;
     }
 
-    const attribute = result === 'low' ? 'from' : 'to';
-    numbers[attribute] = number;
-    client.write(`I predict: ${averageOf(numbers)}\n`);
+    const [numStatus] = Object.entries(stat).find(
+      (condition) => condition[1] === true
+    );
+
+    console.log(`${number}: ${numStatus}`);
+
+    const newNumSuggestion = gameSolver.giveSuggestion(stat);
+    client.write(`I predict: ${newNumSuggestion}\n`);
   };
 
   client.on('data', checkNumberAndUpdate);
@@ -67,7 +108,7 @@ const runGuessGameServer = (range, noOfChances) => {
 };
 
 const main = () => {
-  const range = { from: 0, to: 50 };
+  const range = { from: 0, to: 10 };
   const noOfChances = 5;
   runGuessGameServer(range, noOfChances);
 };

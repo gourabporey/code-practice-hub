@@ -133,8 +133,7 @@ class Game {
     return {
       isOver: this.isOver,
       hasWon: this.hasWon,
-      isOver: this.isOver,
-      number: { equal, high, low },
+      stat: { high, low },
     };
   }
 }
