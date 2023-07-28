@@ -55,7 +55,7 @@ const suggestNumberOnHint = (gameSolverClient, gameSolver) => {
       const number = gameSolver.giveSuggestion(hint);
       console.log(`Guessed: ${number}`);
       gameSolverClient.write(number.toString());
-    }, 1000);
+    }, 500);
   });
 };
 
