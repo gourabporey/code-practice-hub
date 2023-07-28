@@ -163,3 +163,17 @@ class GameSolver {
   }
 }
 ```
+
+```
+1. Change the contract of the client and the server by sending the raw information. and introducing the view in client.
+```
+
+```
+What will the GameController have?
+- client
+- game
+
+What the controller will do?
+It client 
+
+```

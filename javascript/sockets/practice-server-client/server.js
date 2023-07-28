@@ -66,7 +66,17 @@ const runChatBot = () => {
 };
 
 const main = () => {
-  runChatBot();
+  const server = net.createServer();
+  server.listen(9000);
+  server.on('connection', (socket) => {
+    console.log('New Connection established');
+
+    socket.setEncoding('utf-8');
+    socket.on('data', (data) => {
+      console.log(`\nTo Server: ${data}`);
+      socket.write(`\nTo client: ${data}`);
+    });
+  });
 };
 
 main();
