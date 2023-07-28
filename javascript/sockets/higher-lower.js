@@ -1,5 +1,7 @@
 const net = require('node:net');
 
+const toNumber = (numberText) => +numberText;
+
 const generateRandom = (range) => {
   const from = range.from || 0;
   const to = range.to;
@@ -38,42 +40,38 @@ class Game {
   }
 }
 
-const playGuessGame = (client, range, noOfChances) => {
-  console.log('---- New Player Joined!!! ----');
-  const secretNumber = generateRandom({ ...range });
-  const game = new Game(secretNumber, noOfChances);
+const findSatisfiedCondition = (hint) =>
+  Object.entries(hint).find(([, condition]) => condition);
 
+const playGuessGame = (client, game, secretNumber) => {
   client.on('data', (numberText) => {
     const number = +numberText;
     const { isOver, hasWon, hint } = game.accountGuess(number);
-    const msg = hasWon
-      ? `Yooooo! You won, Correctly guessed ${secretNumber}\n`
-      : `Oops, Correct Number was: ${secretNumber}\n`;
+    client.write(JSON.stringify({ hint, isOver, hasWon, secretNumber }));
 
     if (isOver) {
-      client.write(JSON.stringify({ msg }));
       client.end();
       return;
     }
 
-    const [numStatus] = Object.entries(hint).find(([, condition]) => condition);
+    const [numStatus] = findSatisfiedCondition(hint);
     console.log(`${number}: ${numStatus}`);
-    client.write(JSON.stringify({ hint }));
   });
 };
 
-const runGuessGameServer = (guessGameServer, range, noOfChances) => {
+const setupConnection = (guessGameServer, range, noOfChances) => {
   guessGameServer.on('connection', (client) => {
-    playGuessGame(client, range, noOfChances);
-  });
+    console.log('---- New Player Joined!!! ----');
+    const secretNumber = generateRandom({ ...range });
+    const game = new Game(secretNumber, noOfChances);
 
-  guessGameServer.on('end', () => {
-    console.log('Another Game?\n');
+    playGuessGame(client, game, secretNumber);
   });
 };
 
 const main = () => {
-  const range = { from: 1, to: 100 };
+  const [from, to] = process.argv.slice(2, 4).map(toNumber);
+  const range = { from, to };
   const noOfChances = 8;
 
   const guessGameServer = net.createServer();
@@ -82,7 +80,7 @@ const main = () => {
     console.log('started game server...');
   });
 
-  runGuessGameServer(guessGameServer, range, noOfChances);
+  setupConnection(guessGameServer, range, noOfChances);
 };
 
 main();

@@ -1,55 +1,78 @@
 const net = require('node:net');
 
+const toNumber = (numberText) => +numberText;
+
 class GameSolver {
+  #from;
+  #to;
+  #number;
+
   constructor({ from, to }) {
-    this.from = from;
-    this.to = to;
-    this.number = this.getAverage(from, to);
+    this.#from = from;
+    this.#to = to;
+    this.#number = this.#getAverage(from, to);
   }
 
-  getAverage(a, b) {
+  getFirstSuggestion() {
+    return this.#number;
+  }
+
+  #getAverage(a, b) {
     return Math.round((a + b) / 2);
   }
 
   giveSuggestion({ high }) {
     if (high) {
-      this.to = this.number;
+      this.#to = this.#number;
     } else {
-      this.from = this.number + 1;
+      this.#from = this.#number;
     }
 
-    this.number = this.getAverage(this.to, this.from);
+    this.#number = this.#getAverage(this.#to, this.#from);
 
-    return this.number;
+    return this.#number;
   }
 }
 
+const generateGameOverMsg = (hasWon, secretNumber) =>
+  hasWon
+    ? `Yooooo! You won, Correctly guessed ${secretNumber}\n`
+    : `Oops, Correct Number was: ${secretNumber}\n`;
+
 const runAssistantClient = (gameSolverClient, gameSolver) => {
   gameSolverClient.on('connect', () => {
+    const initialGuess = gameSolver.getFirstSuggestion();
+    gameSolverClient.write(initialGuess.toString());
+
     console.log('Here your assistant goes!!!');
-    const number = gameSolver.giveSuggestion({ high: true });
-    gameSolverClient.write(number.toString());
+    console.log(`Guessed: ${initialGuess}`);
 
     gameSolverClient.setEncoding('utf-8');
     gameSolverClient.on('data', (data) => {
-      const response = JSON.parse(data);
-      const { msg, hint } = response;
+      setTimeout(() => {
+        const response = JSON.parse(data);
+        const { isOver, hasWon, hint, secretNumber } = response;
 
-      if (msg) {
-        console.log(msg);
-        return;
-      }
+        if (isOver) {
+          const msg = generateGameOverMsg(hasWon, secretNumber);
+          console.log(msg);
+          return;
+        }
 
-      const number = gameSolver.giveSuggestion(hint);
-      gameSolverClient.write(number.toString());
+        const number = gameSolver.giveSuggestion(hint);
+        console.log(`Guessed: ${number}`);
+        gameSolverClient.write(number.toString());
+      }, 1000);
     });
   });
 };
 
 const main = () => {
-  const range = { from: 1, to: 100 };
+  const [from, to] = process.argv.slice(2, 4).map(toNumber);
+  const range = { from, to };
   const gameSolver = new GameSolver(range);
   const gameSolverClient = net.createConnection(8000);
+
   runAssistantClient(gameSolverClient, gameSolver);
 };
 
