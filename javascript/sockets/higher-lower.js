@@ -33,84 +33,56 @@ class Game {
       isOver: this.isOver,
       hasWon: this.hasWon,
       isOver: this.isOver,
-      stat: { high, low },
+      hint: { high, low },
     };
   }
 }
 
-class GameSolver {
-  constructor({ from, to }) {
-    this.from = from;
-    this.to = to;
-    this.number = this.getAverage(from, to);
-  }
-
-  getAverage(a, b) {
-    return Math.floor((a + b) / 2);
-  }
-
-  giveSuggestion({ high }) {
-    if (high) {
-      this.to = this.number;
-    } else {
-      this.from = this.number + 1;
-    }
-
-    this.number = this.getAverage(this.to, this.from);
-
-    return this.number;
-  }
-}
-
 const playGuessGame = (client, range, noOfChances) => {
-  client.write('Welcome to Guess Game\n');
-  client.write(`Guess a number between ${range.from} to ${range.to}\n`);
+  console.log('---- New Player Joined!!! ----');
   const secretNumber = generateRandom({ ...range });
-
   const game = new Game(secretNumber, noOfChances);
-  const gameSolver = new GameSolver(range);
 
-  const checkNumberAndUpdate = (numberText) => {
+  client.on('data', (numberText) => {
     const number = +numberText;
-    const { isOver, hasWon, stat } = game.accountGuess(number);
-
-    const gameOverMsg = hasWon ? 'Yooooo! You won\n' : 'Game Over\n';
+    const { isOver, hasWon, hint } = game.accountGuess(number);
+    const msg = hasWon
+      ? `Yooooo! You won, Correctly guessed ${secretNumber}\n`
+      : `Oops, Correct Number was: ${secretNumber}\n`;
 
     if (isOver) {
-      client.write(gameOverMsg);
+      client.write(JSON.stringify({ msg }));
       client.end();
       return;
     }
 
-    const [numStatus] = Object.entries(stat).find(
-      (condition) => condition[1] === true
-    );
-
+    const [numStatus] = Object.entries(hint).find(([, condition]) => condition);
     console.log(`${number}: ${numStatus}`);
-
-    const newNumSuggestion = gameSolver.giveSuggestion(stat);
-    client.write(`I predict: ${newNumSuggestion}\n`);
-  };
-
-  client.on('data', checkNumberAndUpdate);
+    client.write(JSON.stringify({ hint }));
+  });
 };
 
-const runGuessGameServer = (range, noOfChances) => {
+const runGuessGameServer = (guessGameServer, range, noOfChances) => {
+  guessGameServer.on('connection', (client) => {
+    playGuessGame(client, range, noOfChances);
+  });
+
+  guessGameServer.on('end', () => {
+    console.log('Another Game?\n');
+  });
+};
+
+const main = () => {
+  const range = { from: 1, to: 100 };
+  const noOfChances = 8;
+
   const guessGameServer = net.createServer();
 
   guessGameServer.listen(8000, () => {
     console.log('started game server...');
   });
 
-  guessGameServer.on('connection', (client) => {
-    playGuessGame(client, range, noOfChances);
-  });
-};
-
-const main = () => {
-  const range = { from: 0, to: 10 };
-  const noOfChances = 5;
-  runGuessGameServer(range, noOfChances);
+  runGuessGameServer(guessGameServer, range, noOfChances);
 };
 
 main();
