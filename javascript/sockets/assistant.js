@@ -39,6 +39,26 @@ const generateGameOverMsg = (hasWon, secretNumber) =>
     ? `Yooooo! You won, Correctly guessed ${secretNumber}\n`
     : `Oops, Correct Number was: ${secretNumber}\n`;
 
+const suggestNumberOnHint = (gameSolverClient, gameSolver) => {
+  gameSolverClient.setEncoding('utf-8');
+  gameSolverClient.on('data', (data) => {
+    setTimeout(() => {
+      const response = JSON.parse(data);
+      const { isOver, hasWon, hint, secretNumber } = response;
+
+      if (isOver) {
+        const msg = generateGameOverMsg(hasWon, secretNumber);
+        console.log(msg);
+        return;
+      }
+
+      const number = gameSolver.giveSuggestion(hint);
+      console.log(`Guessed: ${number}`);
+      gameSolverClient.write(number.toString());
+    }, 1000);
+  });
+};
+
 const runAssistantClient = (gameSolverClient, gameSolver) => {
   gameSolverClient.on('connect', () => {
     const initialGuess = gameSolver.getFirstSuggestion();
@@ -47,28 +67,12 @@ const runAssistantClient = (gameSolverClient, gameSolver) => {
     console.log('Here your assistant goes!!!');
     console.log(`Guessed: ${initialGuess}`);
 
-    gameSolverClient.setEncoding('utf-8');
-    gameSolverClient.on('data', (data) => {
-      setTimeout(() => {
-        const response = JSON.parse(data);
-        const { isOver, hasWon, hint, secretNumber } = response;
-
-        if (isOver) {
-          const msg = generateGameOverMsg(hasWon, secretNumber);
-          console.log(msg);
-          return;
-        }
-
-        const number = gameSolver.giveSuggestion(hint);
-        console.log(`Guessed: ${number}`);
-        gameSolverClient.write(number.toString());
-      }, 1000);
-    });
+    suggestNumberOnHint(gameSolverClient, gameSolver);
   });
 };
 
 const main = () => {
-  const [from, to] = process.argv.slice(2, 4).map(toNumber);
+  const [from = 0, to = 100] = process.argv.slice(2, 4).map(toNumber);
   const range = { from, to };
   const gameSolver = new GameSolver(range);
   const gameSolverClient = net.createConnection(8000);

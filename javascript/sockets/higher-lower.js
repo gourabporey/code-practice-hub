@@ -10,31 +10,36 @@ const generateRandom = (range) => {
 };
 
 class Game {
+  #number;
+  #noOfChances;
+  #hasWon;
+  #isOver;
+
   constructor(number, noOfChances) {
-    this.number = number;
-    this.noOfChances = noOfChances;
-    this.hasWon = false;
-    this.isOver = false;
+    this.#number = number;
+    this.#noOfChances = noOfChances;
+    this.#hasWon = false;
+    this.#isOver = false;
   }
 
   accountGuess(number) {
-    this.noOfChances--;
+    this.#noOfChances--;
 
-    const equal = number === this.number;
-    const high = number > this.number;
-    const low = number < this.number;
+    const equal = number === this.#number;
+    const high = number > this.#number;
+    const low = number < this.#number;
 
     if (equal) {
-      this.hasWon = true;
-      this.isOver = true;
+      this.#hasWon = true;
+      this.#isOver = true;
     }
 
-    if (this.noOfChances === 0) this.isOver = true;
+    if (this.#noOfChances === 0) this.#isOver = true;
 
     return {
-      isOver: this.isOver,
-      hasWon: this.hasWon,
-      isOver: this.isOver,
+      isOver: this.#isOver,
+      hasWon: this.#hasWon,
+      isOver: this.#isOver,
       hint: { high, low },
     };
   }
@@ -70,10 +75,9 @@ const setupConnection = (guessGameServer, range, noOfChances) => {
 };
 
 const main = () => {
-  const [from, to] = process.argv.slice(2, 4).map(toNumber);
+  const [from = 0, to = 100] = process.argv.slice(2, 4).map(toNumber);
   const range = { from, to };
   const noOfChances = 8;
-
   const guessGameServer = net.createServer();
 
   guessGameServer.listen(8000, () => {
