@@ -31,19 +31,41 @@ const isInvalidProtocol = (protocol) => {
   return !protocol || protocol.trim().toUpperCase() !== PROTOCOL;
 };
 
+const isInvalidVerb = (verb) => verb.toUpperCase() !== 'GET';
+
 const getBadReqResponse = () => {
   const status = { code: 400, message: 'Bad Request' };
   const content = 'Bad Request';
-  const response = generateResponse({ status, content });
 
-  return response;
+  return generateResponse({ status, content });
 };
 
 const getContentReqResponse = (uri) => {
   const { content, status } = getContent(uri);
-  const response = generateResponse({ status, content });
+  return generateResponse({ status, content });
+};
 
-  return response;
+const getBadVerbResponse = (verb) => {
+  const content = `${verb} Not Allowed`;
+  const status = { code: 405, message: content };
+
+  return generateResponse({ status, content });
+};
+
+const getResponse = (uri, verb, protocol) => {
+  if (isInvalidProtocol(protocol)) return getBadReqResponse();
+  if (isInvalidVerb(verb)) return getBadVerbResponse(verb);
+  return getContentReqResponse(uri);
+};
+
+const handleRequest = (socket, req) => {
+  console.log(req);
+
+  const { uri, verb, protocol } = parseRequest(req);
+  const response = getResponse(uri, verb, protocol);
+
+  socket.write(response);
+  socket.end();
 };
 
 const main = () => {
@@ -51,19 +73,7 @@ const main = () => {
 
   server.on('connection', (socket) => {
     socket.setEncoding('utf-8');
-
-    socket.on('data', (req) => {
-      console.log(req);
-
-      const { uri, protocol } = parseRequest(req);
-
-      const response = isInvalidProtocol(protocol)
-        ? getBadReqResponse()
-        : getContentReqResponse(uri);
-
-      socket.write(response);
-      socket.end();
-    });
+    socket.on('data', (req) => handleRequest(socket, req));
   });
 
   const PORT = 8000;
