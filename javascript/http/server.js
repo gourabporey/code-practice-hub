@@ -21,20 +21,45 @@ const parseRequest = (requestData) => {
   return { verb, uri, protocol };
 };
 
-const generateResponse = ({ protocol, status, content }) => {
-  return `${protocol} ${status.code} ${status.message}\n\n${content}`;
+const PROTOCOL = 'HTTP/1.1';
+
+const generateResponse = ({ status, content }) => {
+  return `${PROTOCOL} ${status.code} ${status.message}\n\n${content}`;
+};
+
+const isInvalidProtocol = (protocol) => {
+  return !protocol || protocol.trim().toUpperCase() !== PROTOCOL;
+};
+
+const getBadReqResponse = () => {
+  const status = { code: 400, message: 'Bad Request' };
+  const content = 'Bad Request';
+  const response = generateResponse({ status, content });
+
+  return response;
+};
+
+const getContentReqResponse = (uri) => {
+  const { content, status } = getContent(uri);
+  const response = generateResponse({ status, content });
+
+  return response;
 };
 
 const main = () => {
   const server = net.createServer();
 
   server.on('connection', (socket) => {
-    socket.setEncoding('utf-8').on('data', (req) => {
+    socket.setEncoding('utf-8');
+
+    socket.on('data', (req) => {
       console.log(req);
 
       const { uri, protocol } = parseRequest(req);
-      const { content, status } = getContent(uri);
-      const response = generateResponse({ protocol, status, content });
+
+      const response = isInvalidProtocol(protocol)
+        ? getBadReqResponse()
+        : getContentReqResponse(uri);
 
       socket.write(response);
       socket.end();
