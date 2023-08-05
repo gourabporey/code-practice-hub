@@ -1,22 +1,29 @@
 const net = require('node:net');
 
 const getContent = (uri) => {
-  const contents = {
+  const responses = {
     '/': { content: 'home', status: { code: 200, message: 'OK' } },
     '/ping': { content: 'pong', status: { code: 200, message: 'OK' } },
     '/echo': { content: 'echo', status: { code: 200, message: 'OK' } },
   };
 
-  const notFoundContent = {
+  const uriNotFound = {
     status: { message: 'Not Found', code: 404 },
-    content: 'Not Found',
+    content: `${uri} Not Found`,
   };
 
-  return contents[uri] || notFoundContent;
+  return responses[uri] || uriNotFound;
 };
 
-const generateResponse = (status, content) =>
-  `HTTP/1.1 ${status.code} ${status.message}\n\n${content}`;
+const parseRequest = (requestData) => {
+  const [requestLine] = requestData.split('\n');
+  const [verb, uri, protocol] = requestLine.split(' ');
+  return { verb, uri, protocol };
+};
+
+const generateResponse = ({ protocol, status, content }) => {
+  return `${protocol} ${status.code} ${status.message}\n\n${content}`;
+};
 
 const main = () => {
   const server = net.createServer();
@@ -25,9 +32,9 @@ const main = () => {
     socket.setEncoding('utf-8').on('data', (req) => {
       console.log(req);
 
-      const [, uri] = req.split(' ');
+      const { uri, protocol } = parseRequest(req);
       const { content, status } = getContent(uri);
-      const response = generateResponse(status, content);
+      const response = generateResponse({ protocol, status, content });
 
       socket.write(response);
       socket.end();
