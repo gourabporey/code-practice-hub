@@ -1,31 +1,36 @@
 const net = require('node:net');
 
+const PROTOCOL = 'HTTP/1.1';
+
 const STATUS = {
   200: { code: 200, message: 'OK' },
   404: { message: 'Not Found', code: 404 },
 };
 
-const isEcho = (uri) => uri.startsWith('/echo/');
+const getContentOfPath = (firstSection, sections) => {
+  const responses = {
+    echo: { content: sections.join('/'), status: STATUS[200] },
+  };
 
-const getEchoResponse = (uri) => {
-  const content = uri.replace('/echo/', '');
-  const status = STATUS[200];
+  const notFoundContent = `/${firstSection}/${sections.join('/')} Not found`;
+  const uriNotFound = { content: notFoundContent, status: STATUS[404] };
 
-  return { content, status };
+  return responses[firstSection] || uriNotFound;
 };
 
 const getContent = (uri) => {
-  if (isEcho(uri)) return getEchoResponse(uri);
-
   const responses = {
     '/': { content: 'home', status: STATUS[200] },
     '/ping': { content: 'pong', status: STATUS[200] },
     '/echo': { content: 'echo', status: STATUS[200] },
   };
-
   const uriNotFound = { status: STATUS[404], content: `${uri} Not Found` };
 
-  return responses[uri] || uriNotFound;
+  const [, firstComponent, ...pathComponents] = uri.split('/');
+
+  return pathComponents.length === 0
+    ? responses[uri] || uriNotFound
+    : getContentOfPath(firstComponent, pathComponents);
 };
 
 const parseRequest = (requestData) => {
@@ -34,8 +39,6 @@ const parseRequest = (requestData) => {
 
   return { verb, uri, protocol };
 };
-
-const PROTOCOL = 'HTTP/1.1';
 
 const generateResponse = ({ status, content }) => {
   return `${PROTOCOL} ${status.code} ${status.message}\n\n${content}`;
@@ -46,26 +49,26 @@ const isInvalidProtocol = (protocol) =>
 
 const isInvalidVerb = (verb) => verb.toUpperCase() !== 'GET';
 
-const getProtocolErrResponse = () => {
+const respondToProtocolError = () => {
   const content = 'BAD_REQUEST';
   const status = { code: 400, message: content };
 
   return generateResponse({ status, content });
 };
 
-const getBadVerbErrResponse = () => {
+const respondToBadMethod = () => {
   const content = `METHOD_NOT_ALLOWED`;
   const status = { code: 405, message: content };
 
   return generateResponse({ status, content });
 };
 
-const getContentReqResponse = (uri) => generateResponse(getContent(uri));
+const respondToContentRequest = (uri) => generateResponse(getContent(uri));
 
 const getResponse = (uri, verb, protocol) => {
-  if (isInvalidProtocol(protocol)) return getProtocolErrResponse();
-  if (isInvalidVerb(verb)) return getBadVerbErrResponse(verb);
-  return getContentReqResponse(uri);
+  if (isInvalidProtocol(protocol)) return respondToProtocolError();
+  if (isInvalidVerb(verb)) return respondToBadMethod(verb);
+  return respondToContentRequest(uri);
 };
 
 const handleRequest = (socket, req) => {
