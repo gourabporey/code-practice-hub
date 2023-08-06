@@ -4,33 +4,27 @@ const PROTOCOL = 'HTTP/1.1';
 
 const STATUS = {
   200: { code: 200, message: 'OK' },
-  404: { message: 'Not Found', code: 404 },
-};
-
-const getContentOfPath = (firstSection, sections) => {
-  const responses = {
-    echo: { content: sections.join('/'), status: STATUS[200] },
-  };
-
-  const notFoundContent = `/${firstSection}/${sections.join('/')} Not found`;
-  const uriNotFound = { content: notFoundContent, status: STATUS[404] };
-
-  return responses[firstSection] || uriNotFound;
+  404: { code: 404, message: 'Not Found' },
 };
 
 const getContent = (uri) => {
-  const responses = {
-    '/': { content: 'home', status: STATUS[200] },
-    '/ping': { content: 'pong', status: STATUS[200] },
-    '/echo': { content: 'echo', status: STATUS[200] },
-  };
+  const pathAndResponses = [
+    {
+      path: '/echo/*',
+      response: { content: uri.replace('/echo/', ''), status: STATUS[200] },
+    },
+    { path: '/ping$', response: { content: 'pong', status: STATUS[200] } },
+    { path: '/echo$', response: { content: 'echo', status: STATUS[200] } },
+    { path: '/$', response: { content: 'home', status: STATUS[200] } },
+  ];
+
+  const matchedPathAndResponse = pathAndResponses.find(({ path }) => {
+    return new RegExp(path).test(uri);
+  });
+
   const uriNotFound = { status: STATUS[404], content: `${uri} Not Found` };
 
-  const [, firstComponent, ...pathComponents] = uri.split('/');
-
-  return pathComponents.length === 0
-    ? responses[uri] || uriNotFound
-    : getContentOfPath(firstComponent, pathComponents);
+  return matchedPathAndResponse?.response || uriNotFound;
 };
 
 const parseRequest = (requestData) => {
