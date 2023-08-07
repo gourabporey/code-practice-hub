@@ -11,24 +11,33 @@ const getContent = (uri) => {
   const pathAndResponses = [
     {
       path: '/echo/*',
-      response: { content: uri.replace('/echo/', ''), status: STATUS[200] },
+      handler: () => ({
+        content: uri.replace('/echo/', ''),
+        status: STATUS[200],
+      }),
     },
-    { path: '/ping$', response: { content: 'pong', status: STATUS[200] } },
-    { path: '/echo$', response: { content: 'echo', status: STATUS[200] } },
-    { path: '/$', response: { content: 'home', status: STATUS[200] } },
+    {
+      path: '/ping$',
+      handler: () => ({ content: 'pong', status: STATUS[200] }),
+    },
+    {
+      path: '/echo$',
+      handler: () => ({ content: 'echo', status: STATUS[200] }),
+    },
+    { path: '/$', handler: () => ({ content: 'home', status: STATUS[200] }) },
   ];
 
   const matchesUri = ({ path }) => new RegExp(path).test(uri);
   const matchedPathAndResponse = pathAndResponses.find(matchesUri);
   const uriNotFound = { status: STATUS[404], content: `${uri} Not Found` };
 
-  return matchedPathAndResponse?.response || uriNotFound;
+  return matchedPathAndResponse?.handler() || uriNotFound;
 };
 
 const parseRequest = (requestData) => {
-  const [requestLine, ...AllHeaders] = requestData.split('\n');
+  const [requestLine, ...allHeaders] = requestData.split('\n');
   const headers = Object.fromEntries(
-    AllHeaders.map((header) => header.split(': '))
+    allHeaders.map((header) => header.split(': '))
   );
   const [verb, uri, protocol] = requestLine.trim().split(' ');
 
