@@ -1,22 +1,4 @@
-const PROTOCOL = 'HTTP/1.1';
-
-const STATUS = {
-  200: 'OK',
-  400: 'Bad Request',
-  404: 'Page Not Found',
-  405: 'Method Not Allowed',
-};
-
-const generateResponse = ({ statusCode, body, headers }) => {
-  const statusMessage = STATUS[statusCode];
-  const statusLine = [PROTOCOL, statusCode, statusMessage].join(' ');
-  const headerLines = Object.entries(headers)
-    .map((attr) => attr.join(': '))
-    .join('\n');
-  const response = `${statusLine}\n${headerLines}\n\n${body}`;
-
-  return response;
-};
+const { generateResponse } = require('./response-generator');
 
 class Response {
   #socket;
@@ -40,17 +22,17 @@ class Response {
 
   body(content) {
     this.#content = content;
+    this.setHeader('Content-Length', this.#content.length);
   }
 
   send() {
+    this.setHeader('Date', new Date());
+
     const options = {
       statusCode: this.#statusCode,
       body: this.#content,
       headers: this.#headers,
     };
-
-    this.setHeader('Date', new Date());
-    this.setHeader('Content-Length', this.#content.length);
 
     const response = generateResponse(options);
 

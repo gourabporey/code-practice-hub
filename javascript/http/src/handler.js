@@ -3,9 +3,19 @@ const PROTOCOL = 'HTTP/1.1';
 const isInvalidProtocol = (protocol) =>
   protocol.trim().toUpperCase() !== PROTOCOL;
 
+const isInvalidMethod = (method) => method.toUpperCase() !== 'GET';
+
+const isUserAgentAbsent = (headers) => !('User-Agent' in headers);
+
 const handleBadRequest = (response) => {
   response.statusCode(400);
   response.body('Bad Request');
+  response.send();
+};
+
+const handleBadMethod = (response) => {
+  response.statusCode(405);
+  response.body('Method Not Allowed');
   response.send();
 };
 
@@ -21,28 +31,26 @@ const handleValidContent = (content, response) => {
   response.send();
 };
 
+const PATH_CONTENTS = [
+  { path: '/echo/*', getContent: (uri) => uri.replace('/echo/', '') },
+  { path: '/ping$', getContent: () => 'pong' },
+  { path: '/$', getContent: () => 'home' },
+  { path: '/echo$', getContent: () => 'echo' },
+];
+
 const handleContentRequest = (request, response) => {
-  const pathAndResponses = [
-    { path: '/echo/*', getContent: () => request.uri.replace('/echo/', '') },
-    { path: '/ping$', getContent: () => 'pong' },
-    { path: '/$', getContent: () => 'home' },
-    { path: '/echo$', getContent: () => 'echo' },
-  ];
-
   const matchesUri = ({ path }) => new RegExp(path).test(request.uri);
-  const matchedPathResponse = pathAndResponses.find(matchesUri);
-  const content = matchedPathResponse?.getContent();
+  const matchedPathResponse = PATH_CONTENTS.find(matchesUri);
+  const content = matchedPathResponse?.getContent(request.uri);
 
-  return content
-    ? handleValidContent(content, response)
-    : handlePageNotFound(request, response);
+  if (content) handleValidContent(content, response);
+  else handlePageNotFound(request, response);
 };
 
 const handler = (request, response) => {
-  if (isInvalidProtocol(request.protocol)) {
-    return handleBadRequest(response);
-  }
-
+  if (isInvalidProtocol(request.protocol)) return handleBadRequest(response);
+  if (isUserAgentAbsent(request.headers)) return handleBadRequest(response);
+  if (isInvalidMethod(request.method)) return handleBadMethod(response);
   return handleContentRequest(request, response);
 };
 
