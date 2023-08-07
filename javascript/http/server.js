@@ -35,7 +35,8 @@ const getContent = (uri) => {
 };
 
 const parseRequest = (requestData) => {
-  const [requestLine, ...allHeaders] = requestData.split('\n');
+  const [requestInformation] = requestData.split('\r\n\n');
+  const [requestLine, ...allHeaders] = requestInformation.split('\n');
   const headers = Object.fromEntries(
     allHeaders.map((header) => header.split(': '))
   );
