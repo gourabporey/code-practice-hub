@@ -18,32 +18,32 @@ const getContent = (uri) => {
     { path: '/$', response: { content: 'home', status: STATUS[200] } },
   ];
 
-  const matchedPathAndResponse = pathAndResponses.find(({ path }) => {
-    return new RegExp(path).test(uri);
-  });
-
+  const matchesUri = ({ path }) => new RegExp(path).test(uri);
+  const matchedPathAndResponse = pathAndResponses.find(matchesUri);
   const uriNotFound = { status: STATUS[404], content: `${uri} Not Found` };
 
   return matchedPathAndResponse?.response || uriNotFound;
 };
 
 const parseRequest = (requestData) => {
-  const [requestLine] = requestData.split('\n');
+  const [requestLine, ...AllHeaders] = requestData.split('\n');
+  const headers = Object.fromEntries(
+    AllHeaders.map((header) => header.split(': '))
+  );
   const [verb, uri, protocol] = requestLine.trim().split(' ');
 
-  return { verb, uri, protocol };
+  return { verb, uri, protocol, headers };
 };
 
-const generateResponse = ({ status, content }) => {
-  return `${PROTOCOL} ${status.code} ${status.message}\n\n${content}`;
-};
+const generateResponse = ({ status, content }) =>
+  `${PROTOCOL} ${status.code} ${status.message}\n\n${content}`;
 
 const isInvalidProtocol = (protocol) =>
   !protocol || protocol.toUpperCase() !== PROTOCOL;
 
 const isInvalidVerb = (verb) => verb.toUpperCase() !== 'GET';
 
-const respondToProtocolError = () => {
+const respondToBadRequest = () => {
   const content = 'BAD_REQUEST';
   const status = { code: 400, message: content };
 
@@ -57,10 +57,13 @@ const respondToBadMethod = () => {
   return generateResponse({ status, content });
 };
 
+const userAgentNotFound = (headers) => !('User-Agent' in headers);
+
 const respondToContentRequest = (uri) => generateResponse(getContent(uri));
 
-const getResponse = (uri, verb, protocol) => {
-  if (isInvalidProtocol(protocol)) return respondToProtocolError();
+const getResponse = (uri, verb, protocol, headers) => {
+  if (isInvalidProtocol(protocol)) return respondToBadRequest();
+  if (userAgentNotFound(headers)) return respondToBadRequest();
   if (isInvalidVerb(verb)) return respondToBadMethod(verb);
   return respondToContentRequest(uri);
 };
@@ -68,8 +71,8 @@ const getResponse = (uri, verb, protocol) => {
 const handleRequest = (socket, req) => {
   console.log(req);
 
-  const { uri, verb, protocol } = parseRequest(req);
-  const response = getResponse(uri, verb, protocol);
+  const { uri, verb, protocol, headers } = parseRequest(req);
+  const response = getResponse(uri, verb, protocol, headers);
 
   socket.write(response);
   socket.end();
