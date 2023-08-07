@@ -3,9 +3,12 @@ const PROTOCOL = 'HTTP/1.1';
 const isInvalidProtocol = (protocol) =>
   protocol.trim().toUpperCase() !== PROTOCOL;
 
-const isInvalidMethod = (method) => method.toUpperCase() !== 'GET';
+const hasInvalidMethod = (request) => request.method.toUpperCase() !== 'GET';
 
 const isUserAgentAbsent = (headers) => !('User-Agent' in headers);
+
+const isBadRequest = (request) =>
+  isInvalidProtocol(request.protocol) || isUserAgentAbsent(request.headers);
 
 const handleBadRequest = (response) => {
   response.statusCode(400);
@@ -48,9 +51,8 @@ const handleContentRequest = (request, response) => {
 };
 
 const handler = (request, response) => {
-  if (isInvalidProtocol(request.protocol)) return handleBadRequest(response);
-  if (isUserAgentAbsent(request.headers)) return handleBadRequest(response);
-  if (isInvalidMethod(request.method)) return handleBadMethod(response);
+  if (isBadRequest(request)) return handleBadRequest(response);
+  if (hasInvalidMethod(request)) return handleBadMethod(response);
   return handleContentRequest(request, response);
 };
 
