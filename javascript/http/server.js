@@ -35,8 +35,16 @@ const parseRequest = (requestData) => {
   return { verb, uri, protocol, headers };
 };
 
-const generateResponse = ({ status, content }) =>
-  `${PROTOCOL} ${status.code} ${status.message}\n\n${content}`;
+const generateResponse = ({ status, content }) => {
+  const { code, message } = status;
+  const responseLine = [PROTOCOL, code, message].join(' ');
+
+  const dateLine = `Date: ${new Date()}`;
+  const contentLengthLine = `Content-Length: ${content.length}`;
+  const headers = [dateLine, contentLengthLine].join('\n');
+
+  return `${responseLine}\n${headers}\n\n${content}`;
+};
 
 const isInvalidProtocol = (protocol) =>
   !protocol || protocol.toUpperCase() !== PROTOCOL;
