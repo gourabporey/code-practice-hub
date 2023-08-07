@@ -102,7 +102,11 @@ const main = () => {
 
   server.on('connection', (socket) => {
     socket.setEncoding('utf-8');
-    socket.on('data', (req) => handleRequest(socket, req));
+    socket.on('data', (data) => {
+      const request = parseRequest(data);
+      const response = new Response(socket);
+      handler(request, response);
+    });
   });
 
   server.listen(PORT, () => console.log('Listening on', PORT));
