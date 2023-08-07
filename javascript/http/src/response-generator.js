@@ -10,12 +10,11 @@ const STATUS = {
 const generateResponse = ({ statusCode, body, headers }) => {
   const statusMessage = STATUS[statusCode];
   const statusLine = [PROTOCOL, statusCode, statusMessage].join(' ');
-  const headerLines = Object.entries(headers)
-    .map((attr) => attr.join(': '))
-    .join('\r\n');
-  const response = `${statusLine}\r\n${headerLines}\r\n\n${body}`;
 
-  return response;
+  const toHeaderLine = ([key, value]) => `${key}: ${value}`;
+  const headerLines = Object.entries(headers).map(toHeaderLine).join('\r\n');
+
+  return `${statusLine}\r\n${headerLines}\r\n\n${body}`;
 };
 
 module.exports = { generateResponse };
