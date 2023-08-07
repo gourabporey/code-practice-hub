@@ -35,10 +35,10 @@ const handleValidContent = (content, response) => {
 };
 
 const PATH_CONTENTS = [
-  { path: '/echo/*', getContent: (uri) => uri.replace('/echo/', '') },
-  { path: '/ping$', getContent: () => 'pong' },
-  { path: '/$', getContent: () => 'home' },
-  { path: '/echo$', getContent: () => 'echo' },
+  { path: '^/echo/*', getContent: (uri) => uri.replace('/echo/', '') },
+  { path: '^/ping$', getContent: () => 'pong' },
+  { path: '^/$', getContent: () => 'home' },
+  { path: '^/echo$', getContent: () => 'echo' },
 ];
 
 const handleContentRequest = (request, response) => {
