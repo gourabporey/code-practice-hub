@@ -10,47 +10,32 @@ const isBadRequest = (request) =>
 
 const hasInvalidMethod = (request) => request.method.toUpperCase() !== 'GET';
 
-const writeAndEndResponse = (response, { statusCode, body }) => {
-  response.statusCode(statusCode);
-  response.body(body);
-  response.end();
-};
-
 const handleBadRequest = (request, response) => {
-  writeAndEndResponse(response, { statusCode: 400, body: 'Bad Request' });
+  response.statusCode(400).body('Bad Request').end();
 };
 
 const handleBadMethod = (request, response) => {
-  writeAndEndResponse(response, {
-    statusCode: 405,
-    body: 'Method Not Allowed',
-  });
+  response.statusCode(405).body('Method Not Allowed').end();
 };
 
 const handlePageNotFound = (request, response) => {
-  writeAndEndResponse(response, {
-    statusCode: 404,
-    body: `${request.uri} Page Not Found`,
-  });
+  response.statusCode(404).body(`${request.uri} Page Not Found`).end();
 };
 
 const handleRootRequest = (request, response) => {
-  writeAndEndResponse(response, { statusCode: 200, body: 'home' });
+  response.statusCode(200).body('home').end();
 };
 
 const handlePingRequest = (request, response) => {
-  writeAndEndResponse(response, { statusCode: 200, body: 'ping' });
+  response.statusCode(200).body('ping').end();
 };
 
 const handleEchoRequest = (request, response) => {
-  writeAndEndResponse(response, { statusCode: 200, body: 'echo' });
+  response.statusCode(200).body('echo').end();
 };
 
 const handleEchoTextRequest = (request, response) => {
-  writeAndEndResponse(response, {
-    statusCode: 200,
-    body: request.uri.replace('/echo/', ''),
-  });
+  response.statusCode(200).body(request.uri.replace('/echo/', '')).end();
 };
 
 const pathHandlers = [

@@ -14,15 +14,18 @@ class Response {
 
   statusCode(code) {
     this.#statusCode = code;
+    return this;
   }
 
   setHeader(attribute, value) {
     this.#headers[attribute] = value;
+    return this;
   }
 
   body(content) {
     this.#content = content;
     this.setHeader('Content-Length', this.#content.length);
+    return this;
   }
 
   end() {
