@@ -3,56 +3,75 @@ const PROTOCOL = 'HTTP/1.1';
 const isInvalidProtocol = (protocol) =>
   protocol.trim().toUpperCase() !== PROTOCOL;
 
-const hasInvalidMethod = (request) => request.method.toUpperCase() !== 'GET';
-
 const isUserAgentAbsent = (headers) => !('User-Agent' in headers);
 
 const isBadRequest = (request) =>
   isInvalidProtocol(request.protocol) || isUserAgentAbsent(request.headers);
 
-const handleBadRequest = (response) => {
-  response.statusCode(400);
-  response.body('Bad Request');
-  response.send();
+const hasInvalidMethod = (request) => request.method.toUpperCase() !== 'GET';
+
+const writeAndEndResponse = (response, { statusCode, body }) => {
+  response.statusCode(statusCode);
+  response.body(body);
+  response.end();
 };
 
-const handleBadMethod = (response) => {
-  response.statusCode(405);
-  response.body('Method Not Allowed');
-  response.send();
+const handleBadRequest = (request, response) => {
+  writeAndEndResponse(response, { statusCode: 400, body: 'Bad Request' });
+};
+
+const handleBadMethod = (request, response) => {
+  writeAndEndResponse(response, {
+    statusCode: 405,
+    body: 'Method Not Allowed',
+  });
 };
 
 const handlePageNotFound = (request, response) => {
-  response.statusCode(404);
-  response.body(`${request.uri} Page Not Found`);
-  response.send();
+  writeAndEndResponse(response, {
+    statusCode: 404,
+    body: `${request.uri} Page Not Found`,
+  });
 };
 
-const handleValidContent = (content, response) => {
-  response.statusCode(200);
-  response.body(content);
-  response.send();
+const handleRootRequest = (request, response) => {
+  writeAndEndResponse(response, { statusCode: 200, body: 'home' });
 };
 
-const PATH_CONTENTS = [
-  { path: '^/echo/*', getContent: (uri) => uri.replace('/echo/', '') },
-  { path: '^/ping$', getContent: () => 'pong' },
-  { path: '^/$', getContent: () => 'home' },
-  { path: '^/echo$', getContent: () => 'echo' },
+const handlePingRequest = (request, response) => {
+  writeAndEndResponse(response, { statusCode: 200, body: 'ping' });
+};
+
+const handleEchoRequest = (request, response) => {
+  writeAndEndResponse(response, { statusCode: 200, body: 'echo' });
+};
+
+const handleEchoTextRequest = (request, response) => {
+  writeAndEndResponse(response, {
+    statusCode: 200,
+    body: request.uri.replace('/echo/', ''),
+  });
+};
+
+const pathHandlers = [
+  { path: '/echo/.*', handler: handleEchoTextRequest },
+  { path: '/ping', handler: handlePingRequest },
+  { path: '/', handler: handleRootRequest },
+  { path: '/echo', handler: handleEchoRequest },
+  { path: '/.*', handler: handlePageNotFound },
 ];
 
-const handleContentRequest = (request, response) => {
-  const matchesUri = ({ path }) => new RegExp(path).test(request.uri);
-  const matchedPathResponse = PATH_CONTENTS.find(matchesUri);
-  const content = matchedPathResponse?.getContent(request.uri);
+const matchesPattern = (pattern, text) => new RegExp(`^${pattern}$`).test(text);
 
-  if (content) handleValidContent(content, response);
-  else handlePageNotFound(request, response);
+const handleContentRequest = (request, response) => {
+  const matchesUri = ({ path }) => matchesPattern(path, request.uri);
+  const matchedPathResponse = pathHandlers.find(matchesUri);
+  matchedPathResponse.handler(request, response);
 };
 
 const handler = (request, response) => {
-  if (isBadRequest(request)) return handleBadRequest(response);
-  if (hasInvalidMethod(request)) return handleBadMethod(response);
+  if (isBadRequest(request)) return handleBadRequest(request, response);
+  if (hasInvalidMethod(request)) return handleBadMethod(request, response);
   return handleContentRequest(request, response);
 };
 

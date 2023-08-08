@@ -25,7 +25,7 @@ class Response {
     this.setHeader('Content-Length', this.#content.length);
   }
 
-  send() {
+  end() {
     this.setHeader('Date', new Date());
 
     const options = {
