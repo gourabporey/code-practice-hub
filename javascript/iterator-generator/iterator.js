@@ -19,7 +19,7 @@ const isPrime = (number) => {
   return factor === number;
 };
 
-const generateIterator = function* () {
+const primeIterator = function* () {
   let number = 2;
 
   while (true) {
@@ -27,3 +27,8 @@ const generateIterator = function* () {
     number++;
   }
 };
+
+const juxt =
+  (...functions) =>
+  (...numbers) =>
+    functions.map((func) => func(...numbers));
