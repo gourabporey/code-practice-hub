@@ -65,8 +65,8 @@ const matchesPattern = (pattern, text) => new RegExp(`^${pattern}$`).test(text);
 
 const handleContentRequest = (request, response) => {
   const matchesUri = ({ path }) => matchesPattern(path, request.uri);
-  const matchedPathResponse = pathHandlers.find(matchesUri);
-  matchedPathResponse.handler(request, response);
+  const matchedPathHandler = pathHandlers.find(matchesUri).handler;
+  matchedPathHandler(request, response);
 };
 
 const handler = (request, response) => {
