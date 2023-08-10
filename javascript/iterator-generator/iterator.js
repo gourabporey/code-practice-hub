@@ -32,3 +32,13 @@ const juxt =
   (...functions) =>
   (...numbers) =>
     functions.map((func) => func(...numbers));
+
+const fibonacci = function* () {
+  let current = 0;
+  let next = 1;
+
+  while (true) {
+    yield current;
+    [current, next] = [next, current + next];
+  }
+};
