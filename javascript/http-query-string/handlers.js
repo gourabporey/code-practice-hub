@@ -21,7 +21,7 @@ const greetUser = (req, res) => {
   const queryParams = parseParams(req.url);
   const name = queryParams.get('name');
   const message = queryParams.get('message');
-  const greetingHTML = `<h2>${message} ${name}</h2>`;
+  const greetingHTML = `<h2>${message.toUpperCase()} ${name.toUpperCase()}</h2>`;
 
   res.writeHead(200, { 'content-type': 'text/html' }).end(greetingHTML);
 };

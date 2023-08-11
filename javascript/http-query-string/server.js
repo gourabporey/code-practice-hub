@@ -11,12 +11,22 @@ const main = () => {
     log(req);
 
     if (req.url === '/') {
-      serveHomePage(req, res);
+      try {
+        serveHomePage(req, res);
+      } catch (err) {
+        console.log('Error occurred while serving home page', err);
+      }
+
       return;
     }
 
     if (req.url.startsWith('/greet?')) {
-      greetUser(req, res);
+      try {
+        greetUser(req, res);
+      } catch (err) {
+        console.log('Error occurred while handing greeting', err);
+      }
+
       return;
     }
 
