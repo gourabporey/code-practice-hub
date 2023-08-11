@@ -1,32 +1,20 @@
 const http = require('http');
 
-const parseParams = (queryString) =>
-  Object.fromEntries(queryString.split('&').map((param) => param.split('=')));
-
-const handleSearch = (_, res, queryString) => {
-  const queryParams = parseParams(queryString);
-
-  res.write('\n');
-  res.write(`queryString ${JSON.stringify(queryParams)}`);
-};
-
-const redirectToWikipedia = (req, res) => {
-  res.writeHead(302, { location: 'https://www.wikipedia.org' });
-};
+const { serveHomePage, greetUser } = require('./handlers');
 
 const main = () => {
   const server = http.createServer((req, res) => {
-    const [resource, queryString] = req.url.split('?');
-
-    if (resource === '/search') {
-      handleSearch(req, res, queryString);
+    if (req.url === '/') {
+      serveHomePage(req, res);
+      return;
     }
 
-    if (resource === '/wiki') {
-      redirectToWikipedia(req, res);
+    if (req.url.startsWith('/greet?')) {
+      greetUser(req, res);
+      return;
     }
 
-    res.end();
+    sendPageNotFound(req, res);
   });
 
   const PORT = 3030;
