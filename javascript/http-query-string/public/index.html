@@ -1,6 +1,31 @@
 <html>
   <head>
     <title>Greet</title>
+    <style>
+      * {
+        padding: 2px;
+        margin: 0;
+        box-sizing: border-box;
+        font-size: 20px;
+      }
+
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      form {
+        margin: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .form-item {
+        width: 100%;
+      }
+    </style>
   </head>
   <body>
     <header>
@@ -8,13 +33,46 @@
     </header>
 
     <form action="/greet" method="get">
-      <label for="name">Name:</label>
-      <input type="text" name="name" id="name" required />
+      <div class="form-item">
+        <label for="name">Name:</label>
+        <input type="text" name="name" id="name" required />
+      </div>
 
-      <label for="message">Message:</label>
-      <input type="text" name="message" id="message" minlength="3" required />
+      <div class="form-item">
+        <label for="message">Message:</label>
+        <input type="text" name="message" id="message" minlength="3" required />
+      </div>
 
-      <input type="submit" value="greet" />
+      <div class="form-item">
+        <label for="gender">Gender:</label>
+
+        <label for="male">Male</label>
+        <input type="radio" name="gender" id="male" value="male" />
+
+        <label for="female">Female</label>
+        <input type="radio" name="gender" id="female" value="female" />
+      </div>
+
+      <div class="form-item">
+        <label for="interests">Interests:</label>
+
+        <label for="tech">Tech</label>
+        <input type="checkbox" name="interests" id="tech" value="tech" />
+
+        <label for="politics">Politics</label>
+        <input
+          type="checkbox"
+          name="interests"
+          id="politics"
+          value="politics" />
+
+        <label for="food">Food</label>
+        <input type="checkbox" name="interests" id="food" value="food" />
+      </div>
+
+      <div class="form-item">
+        <input type="submit" value="greet" />
+      </div>
     </form>
   </body>
 </html>

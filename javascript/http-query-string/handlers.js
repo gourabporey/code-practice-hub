@@ -19,11 +19,16 @@ const serveHomePage = (req, res) => {
 
 const greetUser = (req, res) => {
   const queryParams = parseParams(req.url);
+  console.log(queryParams);
   const name = queryParams.get('name');
   const message = queryParams.get('message');
-  const greetingHTML = `<h2>${message.toUpperCase()} ${name.toUpperCase()}</h2>`;
+  const interests = queryParams.getAll('interests');
+  const greetingHtml = `<h2>${message} ${name}</h2>`;
+  const bodyHtml = `<p>Your interests are: ${interests}</p>`;
 
-  res.writeHead(200, { 'content-type': 'text/html' }).end(greetingHTML);
+  res
+    .writeHead(200, { 'content-type': 'text/html' })
+    .end(greetingHtml + bodyHtml);
 };
 
 const sendPageNotFound = (req, res) => {
