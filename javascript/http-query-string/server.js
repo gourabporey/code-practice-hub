@@ -1,9 +1,15 @@
 const http = require('http');
 
-const { serveHomePage, greetUser } = require('./handlers');
+const { serveHomePage, greetUser, sendPageNotFound } = require('./handlers');
+
+const log = (req) => {
+  console.log(req.method, req.url);
+};
 
 const main = () => {
   const server = http.createServer((req, res) => {
+    log(req);
+
     if (req.url === '/') {
       serveHomePage(req, res);
       return;

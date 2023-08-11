@@ -9,11 +9,11 @@ const serveHomePage = (req, res) => {
   const filePath = './public/index.html';
 
   readFile(filePath, (err, content) => {
-    if (err) {
-      res.writeHead(500).end();
-    } else {
-      res.end(content);
-    }
+    const [statusCode, contentToSend] = err
+      ? [500, `Error reading file ${filePath}`]
+      : [200, content];
+
+    res.writeHead(statusCode).end(contentToSend);
   });
 };
 
@@ -26,4 +26,9 @@ const greetUser = (req, res) => {
   res.writeHead(200, { 'content-type': 'text/html' }).end(greetingHTML);
 };
 
-module.exports = { greetUser, serveHomePage };
+const sendPageNotFound = (req, res) => {
+  const message = `${req.url} Not found`;
+  res.end(message);
+};
+
+module.exports = { greetUser, sendPageNotFound, serveHomePage };
