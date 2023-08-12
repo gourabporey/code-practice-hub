@@ -1,20 +1,6 @@
-const { readFile } = require('fs');
-
 const parseParams = (url) => {
   const [, queryString] = url.split('?');
   return new URLSearchParams(queryString);
-};
-
-const serveHomePage = (req, res) => {
-  const filePath = './public/index.html';
-
-  readFile(filePath, (err, content) => {
-    const [statusCode, contentToSend] = err
-      ? [500, `Error reading file ${filePath}`]
-      : [200, content];
-
-    res.writeHead(statusCode).end(contentToSend);
-  });
 };
 
 const greetUser = (req, res) => {
@@ -31,9 +17,4 @@ const greetUser = (req, res) => {
     .end(greetingHtml + bodyHtml);
 };
 
-const sendPageNotFound = (req, res) => {
-  const message = `${req.url} Not found`;
-  res.end(message);
-};
-
-module.exports = { greetUser, sendPageNotFound, serveHomePage };
+module.exports = { greetUser };
