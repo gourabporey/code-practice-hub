@@ -1,0 +1,56 @@
+<html>
+  <head>
+    <title>Blog</title>
+    <script>
+      const createCommentElement = (comment) => {
+        const commentElement = document.createElement('p');
+        commentElement.innerText = comment;
+        return commentElement;
+      };
+
+      const showComments = (comments) => {
+        const commenstContainer = document.querySelector('.comments');
+        const commentsElements = comments.map(createCommentElement);
+        commenstContainer.append(...commentsElements);
+      };
+
+      const fetchAndShowComments = () => {
+        fetch('/blog/comment')
+          .then((res) => res.json())
+          .then((body) => showComments(body));
+      };
+
+      window.onload = fetchAndShowComments;
+    </script>
+  </head>
+  <body>
+    <main id="page-wrapper">
+      <header><h1>Blog</h1></header>
+      <section class="blog-contents">
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti et
+          neque, quas quisquam sequi in vel, totam doloremque facere accusantium
+          provident quibusdam ad saepe. Ratione, perferendis at! Magnam,
+          voluptate blanditiis?
+        </p>
+        <p>
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Libero
+          reiciendis asperiores neque laudantium sunt doloremque veritatis
+          explicabo deleniti commodi labore. Explicabo velit rerum iste corporis
+          molestias aliquid dolorem, aspernatur commodi.
+        </p>
+      </section>
+
+      <section class="add-comment">
+        <h2>Comments</h2>
+        <form action="/blog/comment" method="post">
+          <label for="comment">Comment</label>
+          <input type="text" name="comment" id="comment" />
+          <input type="submit" value="Add" />
+        </form>
+      </section>
+
+      <section class="comments"></section>
+    </main>
+  </body>
+</html>
