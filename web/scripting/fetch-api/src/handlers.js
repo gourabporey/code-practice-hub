@@ -35,9 +35,43 @@ const serveBlogPage = (req, res) => {
   });
 };
 
+const serveCalculatorPage = (req, res) => {
+  fs.readFile('./public/calculator.html', 'utf-8', (err, data) => {
+    if (err) {
+      console.log(err);
+      return;
+    }
+
+    res.setHeader('content-type', 'text/html').end(data);
+  });
+};
+
+const calculateAndServeResult = (req, res) => {
+  let reqBody = '';
+  req.on('data', (data) => (reqBody += data));
+  req.on('end', () => {
+    const { operandOne, operandTwo, operator } = JSON.parse(reqBody);
+
+    switch (operator) {
+      case '+':
+        result = operandOne + operandTwo;
+        break;
+
+      case '-':
+        result = operandOne - operandTwo;
+        break;
+    }
+
+    res.writeHead(200, { 'content-type': 'application/json' });
+    res.end(JSON.stringify({ result }));
+  });
+};
+
 module.exports = {
   serveBlogPage,
   servePageNotFound,
   addAndServeComments,
   serveComments,
+  serveCalculatorPage,
+  calculateAndServeResult,
 };

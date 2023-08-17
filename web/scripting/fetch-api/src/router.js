@@ -3,6 +3,8 @@ const {
   servePageNotFound,
   addAndServeComments,
   serveComments,
+  serveCalculatorPage,
+  calculateAndServeResult,
 } = require('./handlers');
 
 const route = (req, res, comments) => {
@@ -18,6 +20,16 @@ const route = (req, res, comments) => {
 
   if (req.method === 'GET' && req.url === '/blog/comment') {
     serveComments(req, res, comments);
+    return;
+  }
+
+  if (req.method === 'GET' && req.url === '/calculator') {
+    serveCalculatorPage(req, res);
+    return;
+  }
+
+  if (req.method === 'POST' && req.url === '/calculate') {
+    calculateAndServeResult(req, res);
     return;
   }
 

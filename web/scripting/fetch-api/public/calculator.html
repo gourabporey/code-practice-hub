@@ -1,0 +1,49 @@
+<html lang="en">
+  <head>
+    <title>Calculator</title>
+    <script>
+      const getCalculatorParams = () => {
+        const operandOne = parseInt(document.querySelector('#operand1').value);
+        const operandTwo = parseInt(document.querySelector('#operand2').value);
+        const operator = document.querySelector('#operator').value;
+
+        return { operandOne, operandTwo, operator };
+      };
+
+      const calculate = (calculatorParams) => {
+        return fetch('/calculate', {
+          method: 'POST',
+          body: JSON.stringify(calculatorParams),
+          headers: {
+            'content-type': 'application/json',
+          },
+        })
+          .then((res) => res.json())
+          .then(({ result }) => result);
+      };
+
+      const showResult = (result) => console.log(result);
+
+      const setupCalculator = () => {
+        const calculateBtn = document.querySelector('#calculate-btn');
+        calculateBtn.onclick = () => {
+          const calculatorParams = getCalculatorParams();
+          calculate(calculatorParams).then(showResult);
+        };
+      };
+
+      window.onload = setupCalculator;
+    </script>
+  </head>
+  <body>
+    <main id="page-wrapper">
+      <input type="number" name="operand1" id="operand1" />
+      <input type="number" name="operand2" id="operand2" />
+      <select name="operator" id="operator">
+        <option value="+">Add</option>
+        <option value="-">Subtract</option>
+      </select>
+      <input type="submit" value="calculate" id="calculate-btn" />
+    </main>
+  </body>
+</html>
