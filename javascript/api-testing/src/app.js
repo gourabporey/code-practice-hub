@@ -5,10 +5,13 @@ const {
   serveLogin,
   loginUser,
 } = require('./handlers/homepage-handler');
+const { logger } = require('./middlewares/logger');
 
 const createApp = () => {
   const app = express();
+
   app.use(express.json());
+  app.use(logger);
 
   app.get('/', serveHome);
   app.post('/intern', greetIntern);
