@@ -42,3 +42,12 @@ const fibonacci = function* () {
     [current, next] = [next, current + next];
   }
 };
+
+const arrayIterator = function* (array) {
+  let currentIndex = 0;
+
+  while (true) {
+    yield array[currentIndex % array.length];
+    currentIndex++;
+  }
+};
