@@ -4,7 +4,7 @@ const {
   greetIntern,
   serveLogin,
   loginUser,
-} = require('./handlers/homepage-handler');
+} = require('./handlers/handlers');
 const { logger } = require('./middlewares/logger');
 
 const createApp = () => {
