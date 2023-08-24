@@ -43,6 +43,22 @@ describe('App', () => {
     });
   });
 
+  const parseCookie = (rawCookies) => {
+    return Object.fromEntries(
+      rawCookies
+        .map((rawCookie) => rawCookie.split('; ')[0])
+        .map((kv) => kv.split('='))
+    );
+  };
+
+  const validateCookies = (res) => {
+    const { name, password } = parseCookie(res.headers['set-cookie']);
+
+    if (name !== 'Riya') throw new Error(`Expected Riya got ${name}`);
+    if (password !== '123')
+      throw new Error(`Expected password 123 got ${password}`);
+  };
+
   describe('POST /login', () => {
     it('should set user credentials in cookie', (_, done) => {
       const app = createApp();
@@ -51,7 +67,7 @@ describe('App', () => {
         .post('/login')
         .send({ name: 'Riya', password: 123 })
         .expect(200)
-        // .expect("set-cookie", 'name=Riya; password=123')
+        .expect(validateCookies)
         .end(done);
     });
   });
