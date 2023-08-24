@@ -1,75 +1,7 @@
 const net = require('node:net');
-
-const toNumber = (numberText) => +numberText;
-
-class GameSolver {
-  #from;
-  #to;
-  #number;
-
-  constructor({ from, to }) {
-    this.#from = from;
-    this.#to = to;
-    this.#number = this.#getAverage(from, to);
-  }
-
-  getFirstSuggestion() {
-    return this.#number;
-  }
-
-  #getAverage(a, b) {
-    return Math.round((a + b) / 2);
-  }
-
-  giveSuggestion({ high }) {
-    if (high) {
-      this.#to = this.#number;
-    } else {
-      this.#from = this.#number;
-    }
-
-    this.#number = this.#getAverage(this.#to, this.#from);
-
-    return this.#number;
-  }
-}
-
-const generateGameOverMsg = (hasWon, secretNumber) =>
-  hasWon
-    ? `Yooooo! You won, Correctly guessed ${secretNumber}\n`
-    : `Oops, Correct Number was: ${secretNumber}\n`;
-
-const suggestNumberOnHint = (gameSolverClient, gameSolver) => {
-  gameSolverClient.setEncoding('utf-8');
-  gameSolverClient.on('data', (data) => {
-    setTimeout(() => {
-      const response = JSON.parse(data);
-      const { isOver, hasWon, hint, secretNumber } = response;
-
-      if (isOver) {
-        const msg = generateGameOverMsg(hasWon, secretNumber);
-        console.log(msg);
-        return;
-      }
-
-      const number = gameSolver.giveSuggestion(hint);
-      console.log(`Guessed: ${number}`);
-      gameSolverClient.write(number.toString());
-    }, 500);
-  });
-};
-
-const runAssistantClient = (gameSolverClient, gameSolver) => {
-  gameSolverClient.on('connect', () => {
-    const initialGuess = gameSolver.getFirstSuggestion();
-    gameSolverClient.write(initialGuess.toString());
-
-    console.log('Here your assistant goes!!!');
-    console.log(`Guessed: ${initialGuess}`);
-
-    suggestNumberOnHint(gameSolverClient, gameSolver);
-  });
-};
+const GameSolver = require('./src/models/game-solver');
+const runAssistantClient = require('./src/controllers/assistant-controller');
+const { toNumber } = require('./src/utils/number-utils');
 
 const main = () => {
   const [from = 0, to = 100] = process.argv.slice(2, 4).map(toNumber);
