@@ -10,3 +10,20 @@ const generateElement = ([tagName, attributes, children]) => {
 
   return element;
 };
+
+const generateElementText = ([tagName, attributes, children]) => {
+  const attributesText = Object.entries(attributes)
+    .map(([attr, val]) => ` ${attr}='${val}'`)
+    .join(' ');
+
+  const openingTag = `<${tagName}${attributesText}>`;
+  const closingTag = `<${tagName}>`;
+
+  if (Array.isArray(children)) {
+    const childrenHtml = children.map(generateElementText).join('\n');
+    const element = `${openingTag}\n${childrenHtml}\n${closingTag}`;
+    return element;
+  }
+
+  return `${openingTag}\n${children || ''}\n${closingTag}`;
+};
