@@ -7,18 +7,11 @@ client.on('connect', () => {
 
   client.setEncoding('utf-8');
 
-  let count = 0;
-  const interval = setInterval(() => {
-    count++;
-    client.write(count.toString());
-
-    if (count === 5) {
-      client.end();
-      clearInterval(interval);
-    }
-  }, 1000);
-
   client.on('data', (data) => {
     console.log(data);
+  });
+
+  process.stdin.on('data', (data) => {
+    client.write(data);
   });
 });

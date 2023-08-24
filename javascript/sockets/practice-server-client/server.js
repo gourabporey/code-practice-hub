@@ -34,10 +34,7 @@ const runCalculatorServer = () => {
   calculatorServer.listen(9000, () => console.log('calculator started'));
 };
 
-const runChatBot = () => {
-  const chatServer = net.createServer();
-  chatServer.listen(9000);
-
+const runChatServer = (chatServer) => {
   const clientSockets = [];
 
   chatServer.on('connection', (socket) => {
@@ -45,38 +42,36 @@ const runChatBot = () => {
     socket.setEncoding('utf-8');
     const messages = [];
 
-    socket.on('data', (data) => {
-      messages.push(data);
+    const makeEntryOfClient = (name) => {
+      clientSockets.push({ socket, messages, name: name.trim() });
+    };
 
-      if (messages.length === 1) {
-        clientSockets.push({ socket, messages, name: data.trim() });
-        return;
+    const sendMsg = (client, msg) => {
+      const identityClient = (client) => client.socket === socket;
+      const msgSender = clientSockets.find(identityClient);
+
+      if (client.socket !== socket) {
+        client.socket.write(`${msgSender.name}: ${msg.trim()}\n`);
       }
+    };
 
-      clientSockets.forEach((client) => {
-        const currentClient = clientSockets.find(
-          (client) => client.socket === socket
-        );
+    const sendMsgToOthers = (msg) => {
+      messages.push(msg.trim());
+      clientSockets.forEach((client) => sendMsg(client, msg));
+    };
 
-        if (socket !== client.socket)
-          client.socket.write(`${currentClient.name}: ${data}\n`);
-      });
+    socket.once('data', (name) => {
+      makeEntryOfClient(name);
+      socket.on('data', sendMsgToOthers);
     });
   });
 };
 
 const main = () => {
   const server = net.createServer();
-  server.listen(9000);
-  server.on('connection', (socket) => {
-    console.log('New Connection established');
-
-    socket.setEncoding('utf-8');
-    socket.on('data', (data) => {
-      console.log(`\nTo Server: ${data}`);
-      socket.write(`\nTo client: ${data}`);
-    });
-  });
+  const PORT = 9000;
+  server.listen(PORT, () => console.log('Server started listening on', PORT));
+  runChatServer(server);
 };
 
 main();
