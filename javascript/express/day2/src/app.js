@@ -4,7 +4,6 @@ const {
   loginUser,
   injectCookies,
   addComment,
-  injectComments,
   handleGetComments,
   serveLoginPage,
   logoutUser,
@@ -12,12 +11,12 @@ const {
 
 const createApp = ({ comments }) => {
   const app = express();
+  app.comments = comments;
 
   app.use(logger);
   app.use(express.json());
   app.use(express.urlencoded());
 
-  app.use(injectComments(comments));
   app.get('/login', serveLoginPage);
   app.post('/login', loginUser);
 

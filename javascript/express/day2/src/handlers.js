@@ -1,9 +1,9 @@
-const logger = (req, res, next) => {
+const logger = (req, _, next) => {
   console.log(req.method, req.path);
   next();
 };
 
-const loginUser = (req, res, next) => {
+const loginUser = (_, res) => {
   res.cookie('username', 'gourab');
   res.redirect('/');
 };
@@ -15,7 +15,7 @@ const injectCookies = (req, res, next) => {
 };
 
 const addComment = (req, res) => {
-  req.comments.push(req.body);
+  req.app.comments.push(req.body);
   res.redirect('/comment');
 };
 
@@ -26,21 +26,16 @@ const generateHTML = (comments) => {
   return heading + comments.map(toCommentHtml).join('\n') + goToHome;
 };
 
-const handleGetComments = (req, res, next) => {
-  const commentsHTML = generateHTML(req.comments);
+const handleGetComments = (req, res) => {
+  const commentsHTML = generateHTML(req.app.comments);
   res.send(commentsHTML);
 };
 
-const injectComments = (comments) => (req, res, next) => {
-  req.comments = comments;
-  next();
-};
-
-const serveLoginPage = (req, res) => {
+const serveLoginPage = (_, res) => {
   res.sendFile(process.env.PWD + '/public/login.html');
 };
 
-const logoutUser = (req, res) => {
+const logoutUser = (_, res) => {
   res.clearCookie('username');
   res.redirect('/');
 };
@@ -50,7 +45,6 @@ module.exports = {
   loginUser,
   injectCookies,
   addComment,
-  injectComments,
   handleGetComments,
   serveLoginPage,
   logoutUser,
