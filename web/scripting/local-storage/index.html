@@ -53,7 +53,7 @@
       };
 
       const setupCounter = () => {
-        const initialCount = localStorage.getItem('count') || 0;
+        const initialCount = +localStorage.getItem('count') || 0;
         const counter = new Counter(initialCount);
 
         const incrementBtn = document.querySelector('.increment-btn');
