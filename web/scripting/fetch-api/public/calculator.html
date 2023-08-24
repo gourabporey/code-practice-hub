@@ -11,14 +11,20 @@
       };
 
       const calculate = (calculatorParams) => {
-        return fetch('/calculate', {
+        const options = {
           method: 'POST',
           body: JSON.stringify(calculatorParams),
           headers: {
             'content-type': 'application/json',
           },
-        })
+        };
+
+        return fetch('/calculate', options)
           .then((res) => res.json())
+          .catch((err) => {
+            console.log(err.message);
+            return { result: 0 };
+          })
           .then(({ result }) => result);
       };
 
