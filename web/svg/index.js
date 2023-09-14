@@ -21,29 +21,30 @@ const generateElement = ([tagName, attributes, children]) => {
   return element;
 };
 
-const generateSvgBoard = ({ rowTileCount, tileDimensions, totalTiles }) => {
-  let currentRowNumber = 0;
-  const columnTileCount = Math.round(totalTiles / rowTileCount);
-
+const generateSvgBoard = ({
+  rowTileCount,
+  columnTileCount,
+  tileDimensions,
+}) => {
   const { width, height } = tileDimensions;
-  const rectangles = new Array(totalTiles).fill('').map((_, index) => {
-    const x = (index % rowTileCount) * width;
-    const y = (currentRowNumber % columnTileCount) * height;
-    if ((index + 1) % rowTileCount === 0) currentRowNumber++;
+  const rectangles = [];
 
-    return [
-      'rect',
-      {
-        x,
-        y,
-        width,
-        height,
-        style:
-          'fill:blue;stroke:pink;stroke-width:5;fill-opacity:0.1;stroke-opacity:0.9',
-      },
-      '',
-    ];
-  });
+  for (let cx = 0; cx < rowTileCount; cx++) {
+    for (let cy = 0; cy < columnTileCount; cy++) {
+      rectangles.push([
+        'rect',
+        {
+          x: cx * width,
+          y: cy * height,
+          width,
+          height,
+          style: 'fill:#e6ccb2;stroke:black;stroke-width:1',
+          id: `${cx},${cy}`,
+        },
+        '',
+      ]);
+    }
+  }
 
   const svgBoard = generateElement([
     'svg',
@@ -58,9 +59,9 @@ window.onload = () => {
   const board = document.querySelector('.board');
   board.append(
     generateSvgBoard({
-      rowTileCount: 5,
-      tileDimensions: { height: 50, width: 50 },
-      totalTiles: 25,
+      rowTileCount: 24,
+      columnTileCount: 25,
+      tileDimensions: { height: 30, width: 30 },
     })
   );
 };
