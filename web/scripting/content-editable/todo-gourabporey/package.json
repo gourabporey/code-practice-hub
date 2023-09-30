@@ -1,0 +1,22 @@
+{
+  "name": "todo-gourabporey",
+  "version": "1.0.0",
+  "description": "A web based todo task manager",
+  "main": "server.js",
+  "scripts": {
+    "test": "node --test",
+    "lint": "eslint .",
+    "server": "node --watch server.js",
+    "coverage": "nyc npm run test"
+  },
+  "author": "gourabporey",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^8.45.0",
+    "nyc": "^15.1.0",
+    "supertest": "^6.3.3"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
