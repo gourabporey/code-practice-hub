@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const addNumbers = (a, b) => a + b;
 // Write a function which gives sum of first n natural number. fn(6) => 21.
 const sumOfN = (n) => (n * (n + 1)) / 2;
