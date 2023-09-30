@@ -112,13 +112,17 @@ const test = (msg: string, fn: Function): void => {
 };
 
 const main = (): void => {
-  test('Sum of first 6 numbers should be 21', () => strictEqual(sumOfN(6), 21));
+  test('Sum of first 6 numbers should be 21', () => {
+    return strictEqual(sumOfN(6), 21);
+  });
 
-  test('It should give false for non palindrome numbers', () =>
-    strictEqual(isPalindrome('mon'), false));
+  test('It should give false for non palindrome numbers', () => {
+    return strictEqual(isPalindrome('mon'), false);
+  });
 
-  test('It Should give true for palindome numbers', () =>
-    strictEqual(isPalindrome('mom'), true));
+  test('It Should give true for palindome numbers', () => {
+    return strictEqual(isPalindrome('mom'), true);
+  });
 
   test('It Should white space padding as provided in the pad length', () => {
     return strictEqual(leftPad('gourab', 5), '     gourab');
