@@ -15,7 +15,7 @@ const floodfillUsingObject = (point, boundary, pointsInside) => {
   return pointsInside;
 };
 
-const getBoundedPoints = list => {
+const getBoundedPoints = (list) => {
   const [pointInside, ...boundary] = list;
 
   const boundaryPoints = boundary.reduce((points, point) => {
@@ -26,7 +26,11 @@ const getBoundedPoints = list => {
 
   if (Object.keys(boundaryPoints).length < 3) return [];
 
-  const pointsInsideLookup = floodfillUsingObject(pointInside, boundaryPoints, {});
+  const pointsInsideLookup = floodfillUsingObject(
+    pointInside,
+    boundaryPoints,
+    {}
+  );
 
   const pointsInside = [];
 
@@ -35,8 +39,8 @@ const getBoundedPoints = list => {
 
     for (const col of cols) {
       pointsInside.push([+row, col]);
-    };
-  };
+    }
+  }
 
   return pointsInside;
 };
