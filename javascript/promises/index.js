@@ -10,3 +10,11 @@ const readFile = (filePath, encoding = 'utf-8') => {
     });
   });
 };
+
+const identity = (number) => {
+  return new Promise((res, rej) => {
+    setTimeout(() => {
+      res(number);
+    }, 1000);
+  });
+};

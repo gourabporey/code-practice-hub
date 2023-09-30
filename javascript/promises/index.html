@@ -1,0 +1,43 @@
+<html>
+  <head>
+    <title>Alarm</title>
+    <script>
+      const getStartBtn = () => document.getElementById('start-btn');
+      const getTimeInputBox = () => document.getElementById('time');
+
+      const alertUser = () => console.log('time up');
+      const playBeep = () => document.getElementById('music').play();
+
+      const timer = (timeInSec) => {
+        return new Promise((res, rej) => {
+          setTimeout(res, timeInSec * 1000);
+        });
+      };
+
+      const setupAlarm = () => {
+        const timeInputBox = getTimeInputBox();
+        const startBtn = getStartBtn();
+
+        startBtn.onclick = () => {
+          timer(+timeInputBox.value).then(playBeep).then(alertUser);
+        };
+      };
+
+      window.onload = setupAlarm;
+    </script>
+  </head>
+  <body>
+    <div id="page-wrapper">
+      <h1>Timer</h1>
+
+      <audio controls id="music" style="display: none">
+        <source src="beep.mp3" type="audio/mpeg" />
+      </audio>
+
+      <label for="time">Duration(sec)</label>
+      <input type="number" name="time" id="time" />
+
+      <input type="button" value="Start" id="start-btn" />
+    </div>
+  </body>
+</html>
