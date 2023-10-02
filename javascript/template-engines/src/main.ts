@@ -1,7 +1,10 @@
-import ejs from 'ejs';
+import createApp from './app';
+import { Express } from 'express';
 
-const people: string[] = ['gourab', 'milan', 'rishabh'];
+const main = (): void => {
+  const app: Express = createApp();
+  const PORT: number = 8080;
+  app.listen(PORT, () => console.log('Server started listening on port', PORT));
+};
 
-const template = '<%= people.join("|") %>';
-
-console.log(ejs.render(template, { people }));
+main();
