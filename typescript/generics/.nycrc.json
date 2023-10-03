@@ -3,5 +3,12 @@
   "reporter": ["html", "text"],
   "statements": 90,
   "check-coverage": "true",
-  "exclude": ["main.js", "coverage/**", ".eslintrc.js", "dist/test/**", "test"]
+  "exclude": [
+    "**/main.js",
+    "**/constants.js",
+    "coverage/**",
+    ".eslintrc.js",
+    "dist/test/**",
+    "test"
+  ]
 }
