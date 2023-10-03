@@ -9,7 +9,9 @@ const main = (): void => {
   console.log(identity(5));
   const strStack = new Stack<string>();
   strStack.push('gourab');
-  console.log(strStack.pop());
+  strStack.push('sauma');
+  console.log('Pop returns the top element', strStack.pop());
+  console.log('Peek element of the stack is', strStack.peek());
 
   const vehicles = [ASTON_DB12, BMW_S_1000_RR];
   console.log(sortVehileBasedOnPrice(vehicles));
