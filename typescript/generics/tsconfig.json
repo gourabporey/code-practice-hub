@@ -5,10 +5,10 @@
     "moduleResolution": "node",
     "module": "commonjs",
     "strict": true,
-    "rootDir": "./src",
     "outDir": "./dist",
     "skipLibCheck": true,
     "moduleDetection": "force",
     "noEmitOnError": true
-  }
+  },
+  "include": ["./src", "./test"]
 }

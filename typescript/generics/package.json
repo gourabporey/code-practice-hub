@@ -4,12 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "rm -rf ./dist && tsc && node ./dist/main.js"
+    "start": "rm -rf ./dist && tsc && node ./dist/main.js",
+    "clean-build": "rm -rf dist && tsc",
+    "test": "npm run clean-build && node --test"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/node": "^20.8.2",
     "typescript": "^5.2.2"
   }
 }
