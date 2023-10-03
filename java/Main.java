@@ -11,5 +11,7 @@ class Main {
     System.out.println(MyString.padLeft("gourab", 5));
 
     System.out.println(MyString.replace("Gourab", 'G', 'g'));
+
+    System.out.println(MyNumber.factorial(5));
   }
 }
