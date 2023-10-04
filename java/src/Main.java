@@ -14,12 +14,7 @@ class Main {
   }
 
   public static void main(String[] args) {
-    int[] elements = {1, 2, 3, 4};
-    int[] doubledUpNumbers = MyArray.doubleUp(elements);
-    int[] numbers = null;
-
-    System.out.println(numbers);
-
-    display(doubledUpNumbers);
+    Coordinate origin = new Coordinate();
+    System.out.println(origin);
   }
 }
