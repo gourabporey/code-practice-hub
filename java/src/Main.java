@@ -1,12 +1,4 @@
 class Main {
-  public static void testReplace() {
-    String testDescription = "Should replace the specified character";
-    String actualReplacedText = MyString.replace("moon", 'o', 'u');
-    String expectedText = "muun";
-
-    Assert.strictEqual(actualReplacedText, expectedText, testDescription);
-  }
-
   static void display(int[] elements) {
     for(int element: elements) {
       System.out.println(element);
@@ -14,7 +6,16 @@ class Main {
   }
 
   public static void main(String[] args) {
-    Coordinate origin = new Coordinate();
-    System.out.println(origin);
+    NutrientItem fatInMaggie = new NutrientItem(Nutrient.FAT, 0.157);
+    NutrientItem carbsInMaggie = new NutrientItem(Nutrient.CARBS, 0.635);
+    NutrientItem proteinInMaggie = new NutrientItem(Nutrient.PROTEIN, 0.08);
+
+    NutrientItem[] maggieNutrients = { 
+      fatInMaggie, carbsInMaggie, proteinInMaggie 
+    };
+
+    Food maggie = new Food(maggieNutrients, 100);
+
+    System.out.println("Calorie count of maggie is: " + maggie.getCalorieCount() + " Cal");
   }
 }
