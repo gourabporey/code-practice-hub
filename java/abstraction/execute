@@ -1,7 +1,10 @@
 function execute() {
   local File_NAME=$1
   javac -sourcepath src -d dist src/$File_NAME.java
-  java -classpath dist $File_NAME
+  
+  if [ $? -eq 0 ]
+    then java -classpath dist $File_NAME
+  fi
 } 
 
 execute $1
