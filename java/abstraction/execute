@@ -1,0 +1,7 @@
+function execute() {
+  local File_NAME=$1
+  javac -sourcepath src -d dist src/$File_NAME.java
+  java -classpath dist $File_NAME
+} 
+
+execute $1
