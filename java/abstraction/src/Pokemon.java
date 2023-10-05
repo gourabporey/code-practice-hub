@@ -1,4 +1,4 @@
-class Pokemon {
+abstract class Pokemon {
   private String name;
   private int hp;
 
@@ -7,7 +7,7 @@ class Pokemon {
     this.hp = hp;
   }
 
-  public void attack(Pokemon opponent) {}
+  abstract public void attack(Pokemon opponent);
 
   public void takeDamage(int damage) {
     this.hp -= damage;

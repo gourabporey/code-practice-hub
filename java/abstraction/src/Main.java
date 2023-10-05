@@ -5,5 +5,10 @@ class Main {
 
     System.out.println(pikachu1);
     System.out.println(pikachu2);
+
+    pikachu1.attack(pikachu2);
+    
+    System.out.println(pikachu1);
+    System.out.println(pikachu2);
   }
 }
