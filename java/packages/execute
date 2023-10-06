@@ -1,0 +1,9 @@
+function execute() {
+  local File_NAME=$1;
+  local Project_Prefix="io/github/gourabporey/graphics";
+  rm -rf target/*
+  javac -sourcepath src -d target src/$Project_Prefix/$File_NAME.java
+  java -classpath target $Project_Prefix.$File_NAME
+} 
+
+execute $1
