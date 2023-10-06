@@ -2,14 +2,14 @@ package io.github.gourabporey.graphics.shapes;
 
 public class Rectangle {
   private double length;
-  private double bredth;
+  private double breadth;
 
-  public Rectangle(double length, double bredth) {
+  public Rectangle(double length, double breadth) {
     this.length = length;
-    this.bredth = bredth;
+    this.breadth = breadth;
   }
 
   public double area() {
-    return this.length * this.bredth;
+    return this.length * this.breadth;
   }
 }
