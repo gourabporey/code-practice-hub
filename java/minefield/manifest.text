@@ -1,0 +1,2 @@
+Main-Class: io.github.gourabporey.minefield.MinefieldGame
+Class-Path: ./lib/graphics.jar
