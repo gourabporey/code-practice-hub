@@ -14,8 +14,13 @@ class Main {
       fatInMaggie, carbsInMaggie, proteinInMaggie 
     };
 
-    Food maggie = new Food(maggieNutrients, 100);
+    Food maggie = new Food("Maggie", maggieNutrients, 100);
 
-    System.out.println("Calorie count of maggie is: " + maggie.getCalorieCount() + " Cal");
+    String maggieNutrientMsg = String.format("Calorie count of %s is %f Cal", maggie, maggie.getCalorieCount());
+
+    System.out.println(maggieNutrientMsg);
+
+    Human gourab = new Human("Gourab", 22);
+    gourab.eat(maggie);
   }
 }

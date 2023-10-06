@@ -11,7 +11,7 @@ class Human implements Animal {
     System.out.println("I am breathing Oxygen");
   }
 
-  public void eat(Eatable eatable) {
-    System.out.println(this.name + " is eating " + eatable.name);
+  public void eat(Edible edible) {
+    System.out.println(this.name + " is eating " + edible);
   }
 }

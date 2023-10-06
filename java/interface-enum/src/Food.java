@@ -1,8 +1,10 @@
 class Food implements Edible {
-  private NutrientItem[] nutrientItems;
+  private String foodName;
   private double quantityInGram;
+  private NutrientItem[] nutrientItems;
  
-  Food(NutrientItem[] nutrientItems, double quantityInGram) {
+  Food(String foodName, NutrientItem[] nutrientItems, double quantityInGram) {
+    this.foodName = foodName;
     this.nutrientItems = nutrientItems;
     this.quantityInGram = quantityInGram;
   }
@@ -15,5 +17,9 @@ class Food implements Edible {
     }
 
     return totalCalorieCount * quantityInGram;
+  }
+
+  public String toString() {
+    return this.foodName;
   }
 }
