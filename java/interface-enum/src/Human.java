@@ -1,6 +1,7 @@
 class Human implements Animal {
-  private String name;
   private int age;
+  private String name;
+  private double calorieIntake;
 
   Human(String name, int age) {
     this.name = name;
@@ -12,6 +13,9 @@ class Human implements Animal {
   }
 
   public void eat(Edible edible) {
-    System.out.println(this.name + " is eating " + edible);
+    double calorieIntake = edible.getCalorieCount(); 
+    this.calorieIntake += calorieIntake;
+    
+    System.out.println(String.format("%s consumed %.2f calories by eating %s", this.name, calorieIntake, edible));
   }
 }
