@@ -1,25 +1,28 @@
 package io.github.gourabporey.collections;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Main {
+  public static <T> Set<T> createSet(T... elements) {
+    Set<T> set = new HashSet<>();
+    Collections.addAll(set, elements);
+    return set;
+  }
+
   public static void main(String[] args) {
-    Set<Intern> interns = new HashSet<>();
-
-    Intern gourab2 = new Intern("gourab2", 22);
     Intern gourab = new Intern("gourab", 22);
-    Intern sourov = new Intern("sourov", 22);
-    Intern utsab = new Intern("utsab", 22);
+    Intern sourov = new Intern("sourov", 23);
+    Intern utsab = new Intern("utsab", 24);
 
-    interns.add(gourab2);
-    interns.add(gourab);
-    interns.add(sourov);
-    interns.add(utsab);
+    Set<Intern> interns = createSet(gourab, sourov, utsab);
 
-    System.out.println(interns);
+    List<Intern> internsList = new ArrayList<>(interns);
+    System.out.println(internsList);
+
+    Comparator<Person> ageComparator = new AgeComparator();
+    internsList.sort(ageComparator);
+
+    System.out.println(internsList);
   }
 
   private static void performStringListOperation(List<String> strings) {
