@@ -10,18 +10,21 @@ public class Main {
     map.put("utsab", 39552);
 
     Collection<Integer> values = map.values();
+    printList(values);
 
-    for (Integer val :  values) {
+    printSeparator();
+
+    map.put("swagato", 39550);
+    printList(values);
+  }
+
+  private static void printSeparator() {
+    System.out.println("x-".repeat(10));
+  }
+
+  private static <T> void printList(Collection<T> values) {
+    for (T val : values) {
       System.out.println(val);
     }
-
-    System.out.println("------------------------------------");
-
-    for (Integer val : values) {
-      map.put("swagato", 39550);
-      System.out.println(val);
-    }
-
-//    System.out.println(map.get("gourab"));
   }
 }

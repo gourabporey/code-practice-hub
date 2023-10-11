@@ -21,9 +21,10 @@ public class Main {
     interns.put("sourov", sourov);
     interns.put("utsab", utsab);
 
-    System.out.println(interns.containsValue(gourab));
+//    System.out.println(interns.containsValue(gourab));
 
-    System.out.println(interns);
+//    System.out.println(interns);
+    performHashsetOperations(gourab, sourov, utsab);
   }
 
   private static void performHashsetOperations(Intern... interns) {
@@ -32,8 +33,7 @@ public class Main {
     List<Intern> internsList = new ArrayList<>(internsSet);
     System.out.println(internsList);
 
-    Comparator<Person> ageComparator = new AgeComparator();
-    internsList.sort(ageComparator);
+    internsList.sort(Comparator.comparingInt(i -> i.age));
 
     System.out.println(internsList);
   }

@@ -3,94 +3,74 @@ package io.github.gourabporey.nesting;
 import java.util.*;
 
 public class ApnaMap<K, V> {
-  private final Collection<Entry<K, V>> entries;
-  private Integer modCount;
-  private Values values;
+  private final int size;
+  private final LinkedList<Node<K, V>>[] entries;
 
   public ApnaMap() {
-    this.entries = new ArrayList<>();
-    this.modCount = 0;
+    this.size = 16;
+    this.entries = new LinkedList[this.size];
   }
 
   public void put(K key, V val) {
-    this.entries.add(new Entry<>(key, val));
-    this.modCount++;
+    int hashCode = key.hashCode();
+    int indexToPut = getIndexToFind(hashCode);
+    LinkedList<Node<K, V>> list = entries[indexToPut];
+
+    if (list == null) {
+      list = new LinkedList<>();
+    }
+
+    list.add(new Node<>(key, val, hashCode));
+    entries[indexToPut] = list;
   }
 
   public V get(K key) {
-    for(Entry<K, V> entry: entries) {
-      if(entry.getKey().equals(key)) {
-        return entry.getValue();
-      };
+    int hashCode = key.hashCode();
+    int indexToFind = getIndexToFind(hashCode);
+
+    LinkedList<Node<K, V>> list = entries[indexToFind];
+
+    if (list == null) return null;
+    for (Node<K, V> node : list) {
+      if (node.getHashCode() == hashCode) return node.getVal();
     }
 
     return null;
   }
 
-  public Collection<Entry<K,V>> entrySet() {
-    return this.entries;
+  private int getIndexToFind(int hashCode) {
+    return Math.abs(hashCode % this.size);
   }
 
   public Collection<V> values() {
-    Collection<V> vs = values;
-
-    if(vs == null) {
-      values = new Values();
-      vs = values;
-    }
-
-    return vs;
+    return new Values();
   }
 
-  public static class Entry<K, V> {
+  private static class Node<K, V> {
     private final K key;
     private final V val;
+    private final int hashCode;
 
-    public Entry(K key, V val) {
+    public Node(K key, V val, int hashCode) {
       this.key = key;
       this.val = val;
-    }
-
-    public V getValue() {
-      return val;
+      this.hashCode = hashCode;
     }
 
     public K getKey() {
       return key;
     }
 
-    @Override
-    public String toString() {
-      return "Entry{" +
-          "key=" + key +
-          ", val=" + val +
-          '}';
+    public V getVal() {
+      return val;
+    }
+
+    public int getHashCode() {
+      return hashCode;
     }
   }
 
-  public class ValueIterator implements Iterator<V> {
-    private final ArrayList<Entry<K, V>> ent;
-    private Integer currentIndex = -1;
-    private final Integer mc;
-
-    public ValueIterator() {
-      mc = modCount;
-      ent = (ArrayList<Entry<K,V>>) entries;
-    }
-
-    @Override
-    public boolean hasNext() {
-      return currentIndex <= entries.size() - 2;
-    }
-
-    @Override
-    public V next() {
-      if(mc != modCount) throw new ConcurrentModificationException();
-      return ent.get(++currentIndex).getValue();
-    }
-  }
-
-  public class Values extends AbstractCollection<V> {
+  private class Values extends AbstractCollection<V> {
     @Override
     public Iterator<V> iterator() {
       return new ValueIterator();
@@ -98,7 +78,48 @@ public class ApnaMap<K, V> {
 
     @Override
     public int size() {
-      return entries.size();
+      return size;
+    }
+  }
+
+  private class ValueIterator implements Iterator<V> {
+    private Iterator<Node<K, V>> listIterator;
+    private final Iterator<LinkedList<Node<K, V>>> iterator;
+
+    private ValueIterator() {
+      this.iterator = Arrays.stream(entries).iterator();
+    }
+
+    @Override
+    public boolean hasNext() {
+      if (!iterator.hasNext()) return false;
+
+      if (isNull(listIterator) || isLastNode()) {
+        LinkedList<Node<K, V>> nextNodeList;
+
+        do {
+          nextNodeList = iterator.next();
+        } while (isNull(nextNodeList) && iterator.hasNext());
+
+        if (isNull(nextNodeList)) return false;
+
+        listIterator = nextNodeList.iterator();
+      }
+
+      return listIterator.hasNext();
+    }
+
+    @Override
+    public V next() {
+      return listIterator.next().getVal();
+    }
+
+    private boolean isNull(Object o) {
+      return o == null;
+    }
+
+    private boolean isLastNode() {
+      return !this.listIterator.hasNext();
     }
   }
 }
