@@ -6,17 +6,30 @@ public class Main {
   public static <T> Set<T> createSet(T... elements) {
     Set<T> set = new HashSet<>();
     Collections.addAll(set, elements);
+
     return set;
   }
 
   public static void main(String[] args) {
+    Map<String, Intern> interns = new HashMap<>();
+
     Intern gourab = new Intern("gourab", 22);
     Intern sourov = new Intern("sourov", 23);
     Intern utsab = new Intern("utsab", 24);
 
-    Set<Intern> interns = createSet(gourab, sourov, utsab);
+    interns.put("gourab", gourab);
+    interns.put("sourov", sourov);
+    interns.put("utsab", utsab);
 
-    List<Intern> internsList = new ArrayList<>(interns);
+    System.out.println(interns.containsValue(gourab));
+
+    System.out.println(interns);
+  }
+
+  private static void performHashsetOperations(Intern... interns) {
+    Set<Intern> internsSet = createSet(interns);
+
+    List<Intern> internsList = new ArrayList<>(internsSet);
     System.out.println(internsList);
 
     Comparator<Person> ageComparator = new AgeComparator();
