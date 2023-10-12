@@ -20,9 +20,9 @@ public class Person {
   public boolean equals(Object obj) {
     if (obj == this) return true;
     if (obj == null) return false;
-    if (!(obj instanceof Intern)) return false;
+    if (!(obj instanceof Person)) return false;
 
-    Intern other = (Intern) obj;
+    Person other = (Person) obj;
 
     return this.age == other.age && this.name.equals(other.name);
   }
