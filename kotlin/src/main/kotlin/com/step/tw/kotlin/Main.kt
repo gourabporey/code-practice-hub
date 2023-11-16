@@ -1,11 +1,7 @@
 package com.step.tw.kotlin
 
+import com.step.tw.kotlin.repository.DBClient
+
 fun main() {
-
-}
-
-fun checkTypes(provider: PersonInfoProvider) {
-    if(provider is SessionInfoProvider) {
-        println("Session Info Provider")
-    }
+    TicketBookingService(BookingRepository(DBClient()), PaymentService(DBClient(), NotificationService(DBClient())))
 }
