@@ -11,12 +11,16 @@ public class ApnaMap<K, V> {
     this.entries = new LinkedList[this.size];
   }
 
+  private boolean isNull(Object o) {
+    return o == null;
+  }
+
   public void put(K key, V val) {
     int hashCode = key.hashCode();
     int indexToPut = getIndexToFind(hashCode);
     LinkedList<Node<K, V>> list = entries[indexToPut];
 
-    if (list == null) {
+    if (isNull(list)) {
       list = new LinkedList<>();
     }
 
@@ -112,10 +116,6 @@ public class ApnaMap<K, V> {
     @Override
     public V next() {
       return listIterator.next().getVal();
-    }
-
-    private boolean isNull(Object o) {
-      return o == null;
     }
 
     private boolean isLastNode() {
