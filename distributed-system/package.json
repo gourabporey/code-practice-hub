@@ -1,0 +1,16 @@
+{
+  "name": "distributed-system",
+  "version": "1.0.0",
+  "description": "Practice folder for distributed system in js",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js",
+    "dev": "node --watch main.js",
+    "test": "node --test"
+  },
+  "author": "gourabporey",
+  "license": "ISC",
+  "dependencies": {
+    "morgan": "^1.10.0"
+  }
+}
