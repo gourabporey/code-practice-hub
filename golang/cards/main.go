@@ -1,9 +1,13 @@
 package main
 
+import "fmt"
+
 func main() {
-	cards := newDeck()
-	hand, remainingCards := deal(cards, 12)
-	
-	hand.print()
-	remainingCards.print()
+	cards := newDeckFromFile("my_cards")
+	hands, _ := deal(cards, 5)
+
+	hands.print()
+	fmt.Println("After shuffling")
+	hands.shuffleV2()
+	hands.print()
 }
