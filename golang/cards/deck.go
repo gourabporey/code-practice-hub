@@ -1,6 +1,7 @@
 package main
 
 import (
+	arrays "cards/utils"
 	"fmt"
 	"io/fs"
 	"math/rand"
@@ -9,14 +10,19 @@ import (
 	"time"
 )
 
-type deck []string
+type card struct {
+	suit  string
+	value string
+}
+
+type deck []card
 
 func newDeck(cardSuits, cardValues []string) deck {
 	cards := deck{}
 
 	for _, suit := range cardSuits {
 		for _, value := range cardValues {
-			card := value + " Of " + suit
+			card := card{suit: suit, value: value}
 			cards = append(cards, card)
 		}
 	}
@@ -26,7 +32,7 @@ func newDeck(cardSuits, cardValues []string) deck {
 
 func (d deck) print() {
 	for cardIndex, card := range d {
-		fmt.Println(cardIndex, card)
+		fmt.Println(cardIndex, card.toString(" Of "))
 	}
 }
 
@@ -34,8 +40,21 @@ func deal(d deck, handSize int) (deck, deck) {
 	return d[:handSize], d[handSize:]
 }
 
+func (c card) toString(sep string) string {
+	return c.value + sep + c.suit
+}
+
 func (d deck) toString() string {
-	return strings.Join([]string(d), "\n")
+	cardSeparator := "-"
+	deckSeparator := "\n"
+
+	cardsData := arrays.Map[card, string](d, func(c card) string {
+		return c.toString(cardSeparator)
+	})
+
+	cards := strings.Join(cardsData, deckSeparator)
+
+	return cards
 }
 
 func (d deck) saveToFile(filename string) error {
@@ -44,15 +63,23 @@ func (d deck) saveToFile(filename string) error {
 	return err
 }
 
+func cardFromData(c string) card {
+	cardParts := strings.Split(c, "-")
+	suit := cardParts[0]
+	value := cardParts[1]
+	return card{suit, value}
+}
+
 func newDeckFromFile(filename string) deck {
 	dataInByte, err := os.ReadFile(filename)
-	
+
 	if err != nil {
 		fmt.Println("Error: ", err)
 		return deck{}
 	}
 
-	cards := strings.Split(string(dataInByte), "\n")
+	cardsData := strings.Split(string(dataInByte), "\n")
+	cards := arrays.Map[string, card](cardsData, cardFromData)
 
 	return deck(cards)
 }
