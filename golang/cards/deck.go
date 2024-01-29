@@ -65,8 +65,8 @@ func (d deck) saveToFile(filename string) error {
 
 func cardFromData(c string) card {
 	cardParts := strings.Split(c, "-")
-	suit := cardParts[0]
-	value := cardParts[1]
+	value := cardParts[0]
+	suit := cardParts[1]
 	return card{suit, value}
 }
 

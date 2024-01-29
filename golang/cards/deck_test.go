@@ -39,5 +39,5 @@ func TestSaveToDeckAndNewDeckFromFile(t *testing.T) {
 
 	assert.Equal(t, 12, len(loadedDeck), "Expected no of cards to be 12 for 4 suits and 3 card values")
 
-	// assert.Equal(t, myDeck, loadedDeck, "Deck before writing to file should be same as deck after retrieving from file")
+	assert.Equal(t, myDeck, loadedDeck, "Deck before writing to file should be same as deck after retrieving from file")
 }
