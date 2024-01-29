@@ -3,7 +3,10 @@ package main
 import "fmt"
 
 func main() {
-	cards := newDeckFromFile("my_cards")
+	suits := []string{"Diamonds", "Clubs", "Spades", "Hearts"}
+	cardValues := []string{"Ace", "Two", "Three"}
+
+	cards := newDeck(suits, cardValues)
 	hands, _ := deal(cards, 5)
 
 	hands.print()

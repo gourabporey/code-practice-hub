@@ -11,11 +11,8 @@ import (
 
 type deck []string
 
-func newDeck() deck {
+func newDeck(cardSuits, cardValues []string) deck {
 	cards := deck{}
-
-	cardSuits := []string{"Diamonds", "Clubs", "Spades", "Hearts"}
-	cardValues := []string{"Ace", "Two", "Three"}
 
 	for _, suit := range cardSuits {
 		for _, value := range cardValues {
