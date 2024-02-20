@@ -1,2 +1,6 @@
-package com.step.tw.kotlin.model 
+package com.step.tw.kotlin.model
 
+enum class TodoStatus {
+    MARKED,
+    UNMARKED
+}

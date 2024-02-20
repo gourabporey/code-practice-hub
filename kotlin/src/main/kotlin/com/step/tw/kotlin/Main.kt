@@ -1,4 +1,9 @@
 package com.step.tw.kotlin
 
-class Main {
+import org.springframework.boot.runApplication
+
+class Main
+
+fun main() {
+    runApplication<Main>()
 }
