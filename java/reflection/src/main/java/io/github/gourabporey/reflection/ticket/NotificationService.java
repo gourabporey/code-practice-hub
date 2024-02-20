@@ -1,7 +1,9 @@
 package io.github.gourabporey.reflection.ticket;
 
+import io.github.gourabporey.reflection.di.Component;
 import io.github.gourabporey.reflection.di.PostConstruct;
 
+@Component
 public class NotificationService {
   @PostConstruct
   public void startNotificationService() {
