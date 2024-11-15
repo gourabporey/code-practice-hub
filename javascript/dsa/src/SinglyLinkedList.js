@@ -1,3 +1,5 @@
+import { isDeepStrictEqual } from "./utils/equality.js";
+
 class Node {
   constructor(val) {
     this.val = val;
@@ -149,6 +151,29 @@ class SinglyLinkedList {
     }
 
     return this;
+  }
+
+  equals(another) {
+    if (this.length !== another.length) return false;
+    if (this.head.val !== another.head.val) return false;
+    if (this.tail.val !== another.tail.val) return false;
+
+    let currNode = this.head;
+    let anotherCurrnNode = another.head;
+
+    while (currNode) {
+      if (!isDeepStrictEqual(currNode.val, anotherCurrnNode.val)) return false;
+      currNode = currNode.next;
+      anotherCurrnNode = anotherCurrnNode.next;
+    }
+
+    return true;
+  }
+
+  static from(...elements) {
+    const sl = new SinglyLinkedList();
+    elements.forEach((elem) => sl.push(elem));
+    return sl;
   }
 }
 

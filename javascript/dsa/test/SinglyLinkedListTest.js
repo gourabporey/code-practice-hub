@@ -1,4 +1,4 @@
-import assert, { strictEqual } from "node:assert";
+import assert from "node:assert";
 import { describe, it } from "node:test";
 import SinglyLinkedList from "../src/SinglyLinkedList.js";
 
@@ -160,11 +160,8 @@ describe("SinglyLinkedList", () => {
   });
   describe("reverse", () => {
     it("should reverse the linked list", () => {
-      const sl = new SinglyLinkedList();
-
-      sl.push(1);
-      sl.push(2);
-      sl.push(3);
+      const sl = SinglyLinkedList.from(1, 2, 3);
+      const reversed = SinglyLinkedList.from(3, 2, 1);
 
       assert.strictEqual(sl.head.val, 1);
       assert.strictEqual(sl.get(1), 2);
@@ -172,9 +169,7 @@ describe("SinglyLinkedList", () => {
 
       sl.reverse();
 
-      assert.strictEqual(sl.head.val, 3);
-      assert.strictEqual(sl.get(1), 2);
-      assert.strictEqual(sl.tail.val, 1);
+      assert.strictEqual(sl.equals(reversed), true);
     });
   });
 });
