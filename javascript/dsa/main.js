@@ -1,13 +1,16 @@
-import SinglyLinkedList from "./src/SinglyLinkedList.js";
+import Stack from "./src/Stack";
 
 const main = () => {
-  const sl = new SinglyLinkedList();
-  sl.push(1);
-  sl.push(2);
-  sl.push(3);
-  sl.push(4);
+  const stack = new Stack();
 
-  console.log(sl);
+  console.log(stack.push("first"));
+  console.log(stack.push("second"));
+  console.log(stack.push("third"));
+
+  console.log(stack.pop());
+  console.log(stack.pop());
+  console.log(stack.pop());
+  console.log(stack.pop());
 };
 
 main();
