@@ -1,0 +1,17 @@
+{
+ :path [src]
+ :deps {org.clojure/clojure {:mvn/version "1.11.0"}
+        http-kit/http-kit {:mvn/version "2.5.3"}
+        ring/ring-core {:mvn/version "1.9.4"}
+        ring/ring-jetty-adapter {:mvn/version "1.9.4"}
+        ring/ring-devel {:mvn/version "1.9.4"}
+        ring/ring-defaults {:mvn/version "0.3.2"}
+        ring/ring-json {:mvn/version "0.5.1"}
+        compojure/compojure {:mvn/version "1.6.2"}
+        ;; com.novemberain/monger {:mvn/version "3.6.0"}
+        }
+ :aliases
+ {:dev {:extra-paths ["dev"]
+        :extra-deps {cider/cider-nrepl {:mvn/version "0.26.0"}}}
+  :run {:main-opts ["-m" "todo-backend.core"]}}
+ }

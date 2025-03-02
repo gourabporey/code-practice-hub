@@ -15,7 +15,7 @@
    "Todo List"])
 
 (defn todo-delete-btn [todo-id]
-  [:button {:class "todo-delete-btn"} "Delete"])
+  [:button {:class "todo-delete-btn"} "x"])
 
 (defn todo-checkbox [todo-id desc marked?]
   [:input {:type "checkbox"
