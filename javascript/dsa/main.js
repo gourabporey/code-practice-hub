@@ -1,11 +1,9 @@
-import Stack from "./src/Stack";
+import StackUsingQueue from "./src/StackUsingQ.js";
 
 const main = () => {
-  const stack = new Stack();
+  const stack = new StackUsingQueue();
 
-  console.log(stack.push("first"));
-  console.log(stack.push("second"));
-  console.log(stack.push("third"));
+  console.log(stack.push("first").push("second").push("third"));
 
   console.log(stack.pop());
   console.log(stack.pop());
