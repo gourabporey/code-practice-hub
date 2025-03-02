@@ -1,14 +1,9 @@
-import StackUsingQueue from "./src/StackUsingQ.js";
+import BinarySearchTree from "./src/BinarySearchTree.js";
 
 const main = () => {
-  const stack = new StackUsingQueue();
-
-  console.log(stack.push("first").push("second").push("third"));
-
-  console.log(stack.pop());
-  console.log(stack.pop());
-  console.log(stack.pop());
-  console.log(stack.pop());
+  const bst = new BinarySearchTree();
+  bst.insert(10).insert(5).insert(11).insert(6).insert(12).insert(4);
+  console.log(bst.toString());
 };
 
 main();
