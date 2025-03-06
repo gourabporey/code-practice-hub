@@ -1,7 +1,6 @@
-use rust::two_sum::two_sum;
+use rust::missed_and_repeated::find_missing_and_repeated_values;
 
 fn main() {
-  println!("Hello, world!");
-  let indexes = two_sum(vec![1, 2, 3, 8], 9);
-  print!("[{}, {}]", indexes.get(0).unwrap(), indexes.get(1).unwrap());
+  let grid = vec![vec![9, 1, 7], vec![8, 9, 2], vec![3, 4, 6]];
+  find_missing_and_repeated_values(grid);
 }
