@@ -1,0 +1,6 @@
+﻿services:
+  appsettingsmanager:
+    image: appsettingsmanager
+    build:
+      context: .
+      dockerfile: AppSettingsManager/Dockerfile
