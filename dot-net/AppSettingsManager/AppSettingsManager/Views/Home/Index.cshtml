@@ -2,19 +2,42 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-    <p>SendGridKey: @ViewBag.sendGridkey</p>
-</div>
+<div class="container">
+    <div class="row">
+        <div class="text-center col">
+            <h1 class="display-4">SendGrid</h1>
+            <p>SendGridKey: @ViewBag.sendGridkey</p>
+        </div>
 
-<div class="text-center">
-    <h1 class="display-4">Settings</h1>
-    <p>@ViewBag.BottomLevelSetting</p>
-</div>
+        <div class="text-center col">
+            <h1 class="display-4">Settings</h1>
+            <p>@ViewBag.BottomLevelSetting</p>
+        </div>
 
-<div class="text-center">
-    <h1 class="display-4">Twilio</h1>
-    <p>@ViewBag.TwilioAccountSid</p>
-    <p>@ViewBag.TwilioApiKey</p>
+        <div class="text-center col">
+            <h1 class="display-4">Twilio</h1>
+            <p>@ViewBag.TwilioAccountSid</p>
+            <p>@ViewBag.TwilioApiKey</p>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="text-center col">
+            <h1 class="display-4">LaunchDarkly</h1>
+            <p>@ViewBag.LaunchDarklySdkKey</p>
+        </div>
+
+        <div class="text-center col">
+            <h1 class="display-4">Social Login Settings</h1>
+            <h2 class="display-5">Google</h2>
+            <p>@ViewBag.GoogleSetting</p>
+            <h2 class="display-5">Facebook</h2>
+            <p>@ViewBag.FacebookSetting</p>
+        </div>
+
+        <div class="text-center col">
+            <h1 class="display-4">Connection string</h1>
+            <p>@ViewBag.DatabaseConnectionString</p>
+        </div>
+    </div>
 </div>

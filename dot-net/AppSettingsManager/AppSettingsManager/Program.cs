@@ -1,7 +1,14 @@
+using AppSettingsManager.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.Configure<TwilioConfig>(builder.Configuration.GetSection("Twilio"));
+var launchDarklyConfig = builder.Configuration.GetSection("LaunchDarkly").Get<LaunchDarklyConfig>()!;
+var socialLoginSettings = builder.Configuration.GetSection("SocialLoginSettings").Get<SocialLoginSettings>()!;
+builder.Services.AddSingleton(launchDarklyConfig);
+builder.Services.AddSingleton(socialLoginSettings);
 
 var app = builder.Build();
 

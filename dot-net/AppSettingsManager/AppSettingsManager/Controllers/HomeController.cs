@@ -1,29 +1,41 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using AppSettingsManager.Models;
+using Microsoft.Extensions.Options;
 
 namespace AppSettingsManager.Controllers;
 
-public class HomeController : Controller
+public class HomeController(
+    ILogger<HomeController> logger,
+    IConfiguration configuration,
+    IOptions<TwilioConfig> twilioConfigOptions,
+    LaunchDarklyConfig launchDarklyConfig,
+    SocialLoginSettings socialLoginSettings)
+    : Controller
 {
-    private readonly ILogger<HomeController> _logger;
-    private readonly IConfiguration _configuration;
-    private readonly TwilioConfig _twilioConfig;
-
-    public HomeController(ILogger<HomeController> logger, IConfiguration configuration)
-    {
-        _logger = logger;
-        _configuration = configuration;
-        _twilioConfig = _configuration.GetSection("Twilio").Get<TwilioConfig>()!;
-    }
+    private readonly ILogger<HomeController> _logger = logger;
 
     public IActionResult Index()
     {
-        ViewBag.sendGridKey = _configuration.GetValue<string>("SendGrid");
-        ViewBag.BottomLevelSetting = _configuration
+        // Direct configuration usage
+        ViewBag.sendGridKey = configuration.GetValue<string>("SendGrid");
+        ViewBag.BottomLevelSetting = configuration
             .GetValue<string>("FirstLevelSetting:SecondLevelSetting:BottomLevelSetting");
-        ViewBag.TwilioApiKey = _twilioConfig.ApiKey;
-        ViewBag.TwilioAccountSid = _twilioConfig.AccountSid;
+        
+        // IOptions usage
+        ViewBag.TwilioApiKey = twilioConfigOptions.Value.ApiKey;
+        ViewBag.TwilioAccountSid = twilioConfigOptions.Value.AccountSid;
+        
+        // Inject LaunchDarklySdkkey
+        ViewBag.LaunchDarklySdkkey = launchDarklyConfig.Sdkkey;
+        
+        // Nested configuration
+        ViewBag.GoogleSetting = socialLoginSettings.GoogleSetting.Value;
+        ViewBag.FacebookSetting = socialLoginSettings.FacebookSetting.Value;
+        
+        // Connection String
+        ViewBag.DatabaseConnectionString = configuration.GetConnectionString("Database");
+        
         return View();
     }
 
