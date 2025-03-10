@@ -7,14 +7,23 @@ namespace AppSettingsManager.Controllers;
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
+    private readonly IConfiguration _configuration;
+    private readonly TwilioConfig _twilioConfig;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(ILogger<HomeController> logger, IConfiguration configuration)
     {
         _logger = logger;
+        _configuration = configuration;
+        _twilioConfig = _configuration.GetSection("Twilio").Get<TwilioConfig>()!;
     }
 
     public IActionResult Index()
     {
+        ViewBag.sendGridKey = _configuration.GetValue<string>("SendGrid");
+        ViewBag.BottomLevelSetting = _configuration
+            .GetValue<string>("FirstLevelSetting:SecondLevelSetting:BottomLevelSetting");
+        ViewBag.TwilioApiKey = _twilioConfig.ApiKey;
+        ViewBag.TwilioAccountSid = _twilioConfig.AccountSid;
         return View();
     }
 
