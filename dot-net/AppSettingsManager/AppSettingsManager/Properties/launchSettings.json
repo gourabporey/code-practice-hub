@@ -7,7 +7,9 @@
       "launchBrowser": true,
       "applicationUrl": "http://localhost:5212",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "SendGrid": "SendGrid ApiKey from env variables",
+        "Twilio__ApiKey": "Twilio ApiKey from env variables"
       }
     },
     "https": {
