@@ -1,12 +1,11 @@
 using System.Net;
 using Knock;
 using PollyRetryPolicyTest.Models;
-using RetryPolicy = PollyRetryPolicyTest.Models.RetryPolicy;
 
 namespace PollyRetryPolicyTest.Services;
 
 public class NotificationService(
-    [FromKeyedServices("KnockTransientRetryPolicy")] RetryPolicy retryPolicy,
+    [FromKeyedServices("KnockTransientRetryPolicy")] IRetryPolicy retryPolicy,
     IRetryPolicyExecutor retryPolicyExecutor,
     ILogger<NotificationService> logger,
     KnockClient knockClient) : INotificationService
@@ -36,8 +35,8 @@ public class NotificationService(
         {
             // var result = await knockClient.Workflows.Trigger("local-weather-email-notification", workflowTriggerOpts);
             // return result;
-            // throw new HttpRequestException("Error sending notification", new Exception(), HttpStatusCode.ServiceUnavailable);
-            return new Dictionary<string, object>() {{"workflowTrigger", workflowTriggerOpts}};
+            throw new HttpRequestException("Error sending notification", new Exception(), HttpStatusCode.ServiceUnavailable);
+            // return new Dictionary<string, object>() {{"workflowTrigger", workflowTriggerOpts}};
         }
         catch (Exception ex)
         {

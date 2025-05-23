@@ -4,5 +4,5 @@ namespace PollyRetryPolicyTest.Services;
 
 public interface IRetryPolicyExecutor
 {
-    public Task<TResult> ExecuteAsync<TResult>(Func<Task<TResult>> func, RetryPolicy retryPolicy);
+    public Task<TResult> ExecuteAsync<TResult>(Func<Task<TResult>> func, IRetryPolicy retryPolicy);
 }

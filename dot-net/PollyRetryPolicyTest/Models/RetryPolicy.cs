@@ -7,10 +7,10 @@ public enum RetryStrategy
     Jitter,
 }
 
-public abstract class RetryPolicy
+public interface IRetryPolicy
 {
-    public string PolicyName { get; set; } = "DefaultRetryPolicy";
-    public int MaxRetries { get; set; } = 3;
-    public List<Tuple<Type, Func<Exception, bool>>> ExceptionTypes { get; set; } = [new(typeof(Exception), (_) => true)] ;
-    public RetryStrategy Strategy { get; set; } = RetryStrategy.Exponential; 
+    public string PolicyName { get; }
+    public int MaxRetries { get; }
+    public List<Tuple<Type, Func<Exception, bool>>> ExceptionTypes { get; }
+    public RetryStrategy Strategy { get; }
 }

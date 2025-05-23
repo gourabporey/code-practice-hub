@@ -1,4 +1,3 @@
-using System.Net;
 using Polly;
 using PollyRetryPolicyTest.Models;
 using Serilog;
@@ -7,21 +6,20 @@ namespace PollyRetryPolicyTest.Factories;
 
 public interface IRetryPolicyFactory
 {
-    IAsyncPolicy CreateHttpRetryPolicy(RetryPolicy retryPolicy);
+    IAsyncPolicy CreateHttpRetryPolicy(IRetryPolicy retryPolicy);
 }
 
-public class RetryPolicyFactory : IRetryPolicyFactory
+public class PollyRetryPolicyFactory : IRetryPolicyFactory
 {
-    public IAsyncPolicy CreateHttpRetryPolicy(RetryPolicy retryPolicy)
+    public IAsyncPolicy CreateHttpRetryPolicy(IRetryPolicy retryPolicy)
     {
-        // I want the exception types to validate if any exception predicate match the current predicate
         var policyBuilder = Policy.Handle<HttpRequestException>(ex =>
             retryPolicy.ExceptionTypes.Any(exceptionPredicateTuple => exceptionPredicateTuple.Item2(ex)));
 
         Action<Exception, TimeSpan, int, Context> onRetry = (exception, timeSpan, retryCount, _) =>
         {
             Log.Information(
-                $"retry {retryCount} after {timeSpan.TotalSeconds} seconds due to {exception.Message}");
+                $"retry {retryCount} after {timeSpan.TotalMilliseconds} ms due to {exception.Message}");
         };
 
         switch (retryPolicy.Strategy)
