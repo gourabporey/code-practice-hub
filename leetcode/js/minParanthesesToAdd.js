@@ -2,30 +2,22 @@ const assert = require("assert");
 const { describe, it } = require("node:test");
 
 var minAddToMakeValid = function (s) {
-  const characters = s.split("");
-  const OPENING_BRACE = "(";
-  const CLOSING_BRACE = ")";
+  let openingBraces = 0;
+  let minAddsRequired = 0;
 
-  const expected = { [OPENING_BRACE]: 0, [CLOSING_BRACE]: 0 };
-  const pendingClosures = { [OPENING_BRACE]: 0, [CLOSING_BRACE]: 0 };
-
-  for (const char of characters) {
-    if (char === OPENING_BRACE) {
-      expected[CLOSING_BRACE] += 1;
-      pendingClosures[OPENING_BRACE] += 1;
+  for (const char of s) {
+    if (char === "(") {
+      openingBraces++;
     } else {
-      const isPendingClosure = pendingClosures[OPENING_BRACE] > 0;
-
-      if (isPendingClosure) {
-        pendingClosures[OPENING_BRACE] -= 1;
-        expected[CLOSING_BRACE] -= 1;
+      if (openingBraces > 0) {
+        openingBraces--;
       } else {
-        expected[OPENING_BRACE] += 1;
+        minAddsRequired++;
       }
     }
   }
 
-  return expected[OPENING_BRACE] + expected[CLOSING_BRACE];
+  return openingBraces + minAddsRequired;
 };
 
 describe("minAddtoMakeValid", () => {
