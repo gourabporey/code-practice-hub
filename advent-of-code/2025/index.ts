@@ -1,10 +1,9 @@
-import { findPasswordV2, findPassword } from "./challenges/day1.ts";
-import { solveD2V1, solveD2V2 } from "./challenges/day2.ts";
+import { calculateMaximumJoltage } from "./challenges/day3.ts";
 import { readFile } from "./utils/readFile.ts";
 
 const main = async () => {
-  const input = await readFile("./data/day2-large.txt");
-  const result = solveD2V2(input);
+  const input = await readFile("./data/day3/day3-large.txt");
+  const result = calculateMaximumJoltage(input, 12);
   console.log(result);
 };
 
