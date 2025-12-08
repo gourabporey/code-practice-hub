@@ -10,7 +10,7 @@ type ID = {
   freshIdRanges: Range[];
 };
 
-type CombinationResult = {
+type MergeResult = {
   success: boolean;
   range?: Range;
 };
@@ -49,63 +49,50 @@ const calculateFreshIdCount = (ingredientData: IngredientData): number => {
   );
 };
 
-const combine = (r1: Range, r2: Range) => {
-  if (r2.lower < r1.lower) [r1, r2] = [r2, r1];
+const merge = (first: Range, second: Range): MergeResult => {
+  if (second.lower < first.lower) [first, second] = [second, first];
 
-  const [x1, y1] = [r1.lower, r1.upper];
-  const [x2, y2] = [r2.lower, r2.upper];
-
-  let low = undefined;
-  let high = undefined;
-
-  if (x2 >= x1 && x2 <= y1) {
-    low = x1;
-    if (y2 >= y1) high = y2;
-    else high = y1;
-  } else if (y2 >= x1 && y2 <= y1) {
-    high = y1;
-    if (x2 >= x1) low = x1;
-    else low = x2;
-  } else if (x1 === y2 + 1) {
-    low = x2;
-    high = y1;
-  } else if (x2 === y1 + 1) {
-    low = x1;
-    high = y2;
+  if (second.lower <= first.upper + 1) {
+    return {
+      success: true,
+      range: {
+        lower: first.lower,
+        upper: Math.max(first.upper, second.upper),
+      },
+    };
   }
 
-  if (low === undefined || high === undefined) return { success: false };
-  return { success: true, range: { lower: low, upper: high } };
+  return { success: false };
 };
 
-const combineRanges = (ranges: Range[]) => {
-  let continuousRanges: Range[] = [];
+const mergeRanges = (ranges: Range[]) => {
+  let merged: Range[] = [];
 
   for (const range of ranges) {
-    let combinationResult: CombinationResult = { success: false };
+    let mergeResult: MergeResult = { success: false };
 
-    for (let j = 0; j < continuousRanges.length; j++) {
-      combinationResult = combine(range, continuousRanges[j] as Range);
+    for (let j = 0; j < merged.length; j++) {
+      mergeResult = merge(range, merged[j] as Range);
 
-      if (combinationResult.success) {
-        continuousRanges.splice(j, 1, combinationResult.range!);
-        continuousRanges = combineRanges(continuousRanges);
+      if (mergeResult.success) {
+        merged.splice(j, 1, mergeResult.range!);
+        merged = mergeRanges(merged);
         break;
       }
     }
 
-    if (!combinationResult.success) {
-      continuousRanges.push(range);
+    if (!mergeResult.success) {
+      merged.push(range);
     }
   }
 
-  return continuousRanges;
+  return merged;
 };
 
 const countIdsInRange = (range: Range) => range.upper - range.lower + 1;
 
 const calculateFreshIdCountFromRanges = (ranges: Range[]): number => {
-  return sum(combineRanges(ranges).map(countIdsInRange));
+  return sum(mergeRanges(ranges).map(countIdsInRange));
 };
 
 export const solveD5V1 = (input: string): number => {
