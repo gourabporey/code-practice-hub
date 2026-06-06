@@ -1,0 +1,22 @@
+{
+  "UserConfig": {
+    "Namespaces": [
+      {
+        "Name": "sbns-order-events",
+        "Topics": [
+          {
+            "Name": "sbt-order-created-events",
+            "Subscriptions": [
+              {
+                "Name": "sbts-order-created-events"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "Logging": {
+      "Type": "Console"
+    }
+  }
+}
