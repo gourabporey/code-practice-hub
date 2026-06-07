@@ -1,7 +1,9 @@
-using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
+using OrderEvents.Function.Constants;
 
 namespace OrderEvents.Function;
 
@@ -11,9 +13,21 @@ public class Program
     {
         var builder = FunctionsApplication.CreateBuilder(args);
 
-        builder.Services.AddLogging();
         builder.ConfigureFunctionsWebApplication();
-        builder.Services.AddApplicationInsightsTelemetryWorkerService().ConfigureFunctionsApplicationInsights();
+
+        builder
+            .Services.AddOpenTelemetry()
+            .ConfigureResource(resource =>
+            {
+                resource.AddService(serviceName: "OrderEvents.Function");
+            })
+            .WithTracing(tracing =>
+            {
+                tracing
+                    .SetSampler(new AlwaysOnSampler())
+                    .AddSource(ActivitySourceNames.OrderCreatedEvents)
+                    .AddConsoleExporter();
+            });
 
         var app = builder.Build();
 
