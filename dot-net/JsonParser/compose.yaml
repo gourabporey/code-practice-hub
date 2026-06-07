@@ -1,0 +1,6 @@
+﻿services:
+  jsonparser:
+    image: jsonparser
+    build:
+      context: .
+      dockerfile: Dockerfile
